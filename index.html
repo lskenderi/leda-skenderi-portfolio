@@ -1,32 +1,425 @@
+<!-- index.html (FULL, text updated only) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leda Skenderi | Portfolio</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leda Skenderi | Portfolio</title>
+
+  <link rel="icon" type="image/png" href="images/LS.png">
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Alegreya+SC:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
+
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="#about">About</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
 
-    <main>
-        <section id="hero">
-            <h1>Leda Skenderi</h1>
-            <p>Welcome to my portfolio.</p>
-        </section>
-    </main>
+<!-- =========================
+     HEADER
+========================== -->
+<header class="site-header">
+  <div class="header-inner">
 
-    <footer>
-        <p>&copy; 2023 Leda Skenderi</p>
-    </footer>
-    <script src="script.js"></script>
+    <a href="/" class="brand">
+      <span class="brand-desktop">LEDA SKENDERI</span>
+      <span class="brand-mobile">LS</span>
+    </a>
+
+    <!-- Mobile hamburger -->
+    <button class="nav-toggle" aria-expanded="false" aria-controls="mobile-menu">
+      <svg class="icon icon-burger" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M3 6H21" />
+        <path d="M3 12H21" />
+        <path d="M3 18H21" />
+      </svg>
+
+      <svg class="icon icon-close" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M6 6L18 18" />
+        <path d="M18 6L6 18" />
+      </svg>
+    </button>
+
+    <nav class="nav" id="site-nav">
+      <a href="#about" class="nav-link">About</a>
+      <a href="#contact" class="nav-link">Contact</a>
+      <a href="#projects" class="nav-link">Projects</a>
+      <a href="#linkedin" class="nav-link">LinkedIn</a>
+    </nav>
+  </div>
+</header>
+
+<!-- Mobile dropdown -->
+<div class="mobile-menu" id="mobile-menu">
+  <div class="menu-inner">
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+    <a href="#projects">Projects</a>
+    <a href="#linkedin">LinkedIn</a>
+  </div>
+</div>
+
+<main>
+
+<!-- =========================
+     HERO SECTION
+========================== -->
+<section id="hero" class="hero-wrap">
+  <div class="hero-layout">
+
+    <div class="hero-card">
+      <div class="hero-slideshow">
+        <img class="slide is-visible" src="images/hero-01.jpg" alt="">
+        <img class="slide" src="images/hero-02.jpg" alt="">
+      </div>
+
+      <img class="hero-detail hero-detail-01" src="images/detail-01.png" alt="" aria-hidden="true">
+    </div>
+
+    <img class="hero-detail hero-detail-02" src="images/detail-02.png" alt="" aria-hidden="true">
+    <img class="hero-detail hero-detail-03" src="images/detail-03.png" alt="" aria-hidden="true">
+
+    <div class="hero-textcard">
+      <h1 class="hero-headline">
+        FASHION PRODUCT DEVELOPMENT<br>
+        &amp; RESPONSIBLE INNOVATION
+      </h1>
+
+      <p class="hero-meta">
+        <span class="meta-primary">
+          From materials to market, contributing to collections that align creativity, sustainability, and business strategy.
+        </span>
+        <span class="meta-secondary">
+          MBA Candidate in Luxury Goods and Fashion Industries,
+        </span>
+        <span class="meta-primary">
+          MODART International.
+        </span>
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- =========================
+     ABOUT SECTION
+========================== -->
+<section id="about" class="about-wrap">
+  <div class="about-layout">
+    <div class="about-card">
+
+      <h2 class="about-title">ABOUT</h2>
+
+      <img class="about-photo" src="images/about.jpg" alt="Portrait" />
+
+      <p class="about-subheading">
+        My expertise exists at the intersection of
+        <span class="about-subheading-em">luxury strategy</span>,
+        <span class="about-subheading-em">marketing</span>,
+        <span class="about-subheading-em">sustainability</span>,
+        <span class="about-subheading-em">and cultural insight</span>.
+      </p>
+
+      <div class="about-body">
+
+        <p>
+          With a background in life sciences and advanced training in luxury goods and fashion industries, I bring a structured, analytical approach to brand development. My foundation in biology shaped the way I think: through systems, long-term impact, and evidence-based decision-making. Today, I apply that mindset to the evolving challenges of the luxury sector.
+        </p>
+
+        <p>
+          I am particularly interested in how consumer expectations are shifting toward transparency, material literacy, and cultural relevance. As sustainability moves from narrative to necessity, brands must rethink not only what they produce, but how they position, communicate, and operationalize responsibility.
+        </p>
+
+        <p>
+          My work explores how innovation, regulatory evolution, and behavioral economics influence desirability in fashion and luxury. I focus on translating complex sustainability concepts into strategic opportunities such as aligning brand identity, product development, and market positioning.
+        </p>
+
+        <p>
+          Across strategy, merchandising, and sustainability advisory roles, I have worked cross-functionally with marketing, legal, and design teams to integrate responsible practices into business decisions. I am driven by clarity, precision, and the belief that the future of luxury lies in systems that make excellence and responsibility inseparable.
+        </p>
+
+        <p>
+          I am building a career dedicated to shaping brands that are not only desirable, but structurally intelligent.
+        </p>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================
+     CONTACT + CV SECTION
+========================== -->
+<section id="contact" class="contact-wrap">
+  <div class="contact-layout">
+
+    <div class="contact-card">
+      <div class="contact-inner">
+
+        <h2 class="contact-title">CONTACT</h2>
+
+        <p class="contact-lead">
+          I am open to conversations regarding brand strategy, sustainability integration,
+          merchandising, and luxury market development.
+        </p>
+
+        <p class="contact-sub">
+          For professional inquiries, collaborations, or opportunities you can contact via:
+        </p>
+
+        <div class="contact-cta">
+          <a class="btn btn-light" href="mailto:ledaskenderi@yahoo.com">Email</a>
+
+          <a class="btn btn-light"
+             href="https://www.linkedin.com/in/leda-skenderi-77784320b/"
+             target="_blank"
+             rel="noopener noreferrer">
+             LinkedIn
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CV -->
+  <div class="cv-card" id="cv">
+    <div class="cv-inner">
+
+      <div class="cv-header">
+        <h2 class="cv-title">CURRICULUM VITAE</h2>
+
+        <div class="cv-actions">
+          <a class="btn" href="assets/CV.pdf" target="_blank" rel="noopener noreferrer">
+            Open PDF
+          </a>
+          <a class="btn" href="assets/CV.pdf" download>
+            Download
+          </a>
+        </div>
+      </div>
+
+      <div class="cv-viewer">
+        <img class="cv-img" src="images/CV.png" alt="Leda Skenderi CV">
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+<!-- =========================
+     PROJECTS SECTION
+========================== -->
+<section id="projects" class="projects-wrap">
+  <div class="projects-layout">
+
+    <div class="projects-card">
+      <h2 class="projects-title">PROJECTS</h2>
+
+      <a class="project-card" href="project-01.html">
+        <img class="project-img" src="images/project-01.png" alt="">
+        <h3 class="project-name">STELLA MCCARTNEY × MARLBORO</h3>
+        <p class="project-field">Strategic Marketing &amp; Sustainable Development</p>
+        <p class="project-desc">
+          Inspired by my LinkedIn post “Sustainability is like smoking,” this conceptual project explores the idea that sustainability progresses through systems rather than moral messaging.
+        </p>
+      </a>
+
+      <a class="project-card" href="project-02.html">
+        <img class="project-img" src="images/project-02.png" alt="">
+        <h3 class="project-name">L’INTIMITÉ EST MORTE, VIVE L’INTIMITÉ</h3>
+        <p class="project-field">Trend Forecasting</p>
+        <p class="project-desc">
+          Trend analysis project exploring how digital hyperexposure transforms intimacy into cultural material.
+        </p>
+      </a>
+
+      <a class="project-card" href="project-03.html">
+        <img class="project-img" src="images/project-03.png" alt="">
+        <h3 class="project-name">Chanel Capsule — CourchevelL</h3>
+        <p class="project-field">Merchandising Strategy</p>
+        <p class="project-desc">
+          Strategic merchandising project focused on a Chanel capsule collection in a seasonal retail setting.
+        </p>
+      </a>
+
+      <a class="project-card" href="project-04.html">
+        <img class="project-img" src="images/project-04.png" alt="">
+        <h3 class="project-name">DEADWOOD PROJECT</h3>
+        <p class="project-field">Marketing Analysis</p>
+        <p class="project-desc">
+          Strategic marketing project analyzing the international expansion potential of Deadwood Studios, a sustainable fashion brand specializing in upcycled leather.
+        </p>
+      </a>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- =========================
+     LINKEDIN
+========================== -->
+<section id="linkedin" class="linkedin-wrap">
+  <div class="linkedin-layout">
+    <div class="linkedin-card">
+
+      <!-- Top Row: Title + Arrows -->
+      <div class="linkedin-carousel-top">
+        <h2 class="linkedin-title">LINKEDIN</h2>
+
+        <div class="linkedin-arrows">
+          <button class="linkedin-arrow prev" type="button" aria-label="Previous posts">←</button>
+          <button class="linkedin-arrow next" type="button" aria-label="Next posts">→</button>
+        </div>
+      </div>
+
+      <!-- Carousel Viewport -->
+      <div class="linkedin-viewport">
+        <div class="linkedin-track">
+
+          <!-- Card 1 -->
+          <article class="linkedin-post">
+            <div class="linkedin-post-top">
+              <p class="linkedin-post-label">Post</p>
+              <a class="linkedin-post-open"
+                 href="https://www.linkedin.com/feed/update/urn:li:activity:7348267117017726976/"
+                 target="_blank"
+                 rel="noopener">
+                 Open
+              </a>
+            </div>
+            <div class="linkedin-embed">
+              <iframe
+                src="https://www.linkedin.com/embed/feed/update/urn:li:activity:7348267117017726976"
+                allowfullscreen
+                title="LinkedIn post 1">
+              </iframe>
+            </div>
+          </article>
+
+          <!-- Card 2 -->
+          <article class="linkedin-post">
+            <div class="linkedin-post-top">
+              <p class="linkedin-post-label">Post</p>
+              <a class="linkedin-post-open"
+                 href="https://www.linkedin.com/feed/update/urn:li:activity:7335243004347043840/"
+                 target="_blank"
+                 rel="noopener">
+                 Open
+              </a>
+            </div>
+            <div class="linkedin-embed">
+              <iframe
+                src="https://www.linkedin.com/embed/feed/update/urn:li:activity:7335243004347043840"
+                allowfullscreen
+                title="LinkedIn post 2">
+              </iframe>
+            </div>
+          </article>
+
+          <!-- Card 3 -->
+          <article class="linkedin-post">
+            <div class="linkedin-post-top">
+              <p class="linkedin-post-label">Post</p>
+              <a class="linkedin-post-open"
+                 href="https://www.linkedin.com/feed/update/urn:li:activity:7343186189954252800/"
+                 target="_blank"
+                 rel="noopener">
+                 Open
+              </a>
+            </div>
+            <div class="linkedin-embed">
+              <iframe
+                src="https://www.linkedin.com/embed/feed/update/urn:li:activity:7343186189954252800"
+                allowfullscreen
+                title="LinkedIn post 3">
+              </iframe>
+            </div>
+          </article>
+
+          <!-- Card 4 -->
+          <article class="linkedin-post">
+            <div class="linkedin-post-top">
+              <p class="linkedin-post-label">Post</p>
+              <a class="linkedin-post-open"
+                 href="https://www.linkedin.com/feed/update/urn:li:activity:7368560875437199362/"
+                 target="_blank"
+                 rel="noopener">
+                 Open
+              </a>
+            </div>
+            <div class="linkedin-embed">
+              <iframe
+                src="https://www.linkedin.com/embed/feed/update/urn:li:activity:7368560875437199362"
+                allowfullscreen
+                title="LinkedIn post 4">
+              </iframe>
+            </div>
+          </article>
+
+          <!-- Card 5 -->
+          <article class="linkedin-post">
+            <div class="linkedin-post-top">
+              <p class="linkedin-post-label">Post</p>
+              <a class="linkedin-post-open"
+                 href="https://www.linkedin.com/feed/update/urn:li:activity:7351181331902431232/"
+                 target="_blank"
+                 rel="noopener">
+                 Open
+              </a>
+            </div>
+            <div class="linkedin-embed">
+              <iframe
+                src="https://www.linkedin.com/embed/feed/update/urn:li:activity:7351181331902431232"
+                allowfullscreen
+                title="LinkedIn post 5">
+              </iframe>
+            </div>
+          </article>
+
+          <!-- Card 6 -->
+          <article class="linkedin-post">
+            <div class="linkedin-post-top">
+              <p class="linkedin-post-label">Post</p>
+              <a class="linkedin-post-open"
+                 href="https://www.linkedin.com/feed/update/urn:li:activity:7376537141645926400/"
+                 target="_blank"
+                 rel="noopener">
+                 Open
+              </a>
+            </div>
+            <div class="linkedin-embed">
+              <iframe
+                src="https://www.linkedin.com/embed/feed/update/urn:li:activity:7376537141645926400"
+                allowfullscreen
+                title="LinkedIn post 6">
+              </iframe>
+            </div>
+          </article>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- =========================
+     FOOTER
+========================== -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-text">
+      Property of Leda Skenderi
+    </div>
+    <div class="footer-credit">
+      Creative Copyright A.Slimani ©️ 2026
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
 </body>
 </html>
