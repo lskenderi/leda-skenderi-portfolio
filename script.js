@@ -197,122 +197,106 @@ document.addEventListener("DOMContentLoaded", () => {
 
 (function () {
   /**
-   * LinkedIn Embed Loader
+   * LinkedIn Embed Loader — Polaroid Strategy
    * ─────────────────────────────────────────────────────────────
-   * Strategy:
-   *  1. Image (.linkedin-preview) is visible by default as placeholder.
-   *  2. IntersectionObserver triggers iframe load when card is near viewport.
-   *  3. Iframes are staggered 300ms apart to avoid LinkedIn rate-limiting.
-   *  4. On successful load (cross-origin block = real embed) → hide preview.
-   *  5. On blank/error page → retry once after 4s.
-   *  6. After MAX_RETRIES → show text fallback. Preview hides, fallback shows.
+   * Default state: each card shows image + caption (polaroid).
+   * On successful iframe load: swap the polaroid body for the live iframe.
+   * On failure after retries: do nothing — polaroid stays, looks great.
    * ─────────────────────────────────────────────────────────────
    */
 
-  var MAX_RETRIES  = 2;
-  var RETRY_DELAY  = 4000;
-  var STAGGER      = 300;
+  var MAX_RETRIES = 2;
+  var RETRY_DELAY = 4000;
+  var STAGGER     = 300;
 
-  // ── Preview helpers ─────────────────────────────────────────
-
-  function getPreview(iframe) {
-    var post = iframe.closest('.linkedin-post');
-    return post ? post.querySelector('.linkedin-preview') : null;
-  }
-
-  function hidePreview(iframe) {
-    var preview = getPreview(iframe);
-    if (!preview) return;
-    preview.style.transition = 'opacity 0.4s ease';
-    preview.style.opacity = '0';
-    setTimeout(function () { preview.style.display = 'none'; }, 420);
-  }
-
-  // ── Core load logic ─────────────────────────────────────────
-
-  function loadIframe(iframe, attempt) {
+  function loadEmbed(post, attempt) {
     attempt = attempt || 1;
 
-    var src = iframe.dataset.src;
+    var src = post.dataset.embed;
     if (!src) return;
 
-    iframe.src = '';
+    var iframe = document.createElement('iframe');
     iframe.src = src;
+    iframe.allowFullscreen = true;
+    iframe.title = post.querySelector('.linkedin-caption-title')
+                       ? post.querySelector('.linkedin-caption-title').textContent
+                       : 'LinkedIn post';
 
-    iframe.addEventListener('load', function onLoad() {
-      iframe.removeEventListener('load', onLoad);
-
+    iframe.addEventListener('load', function () {
       try {
-        // If we can READ the document, LinkedIn returned a same-origin
-        // error page (blank). Treat as failure and retry.
+        // If we can read the doc, it's a same-origin error page — retry
         var doc = iframe.contentDocument || iframe.contentWindow.document;
         if (doc && (!doc.body || doc.body.innerHTML.trim() === '')) {
-          scheduleRetry(iframe, attempt);
+          scheduleRetry(post, attempt);
           return;
         }
-        // If we CAN read it and it has content, still treat as failure
-        // (LinkedIn shouldn't be same-origin in production).
-        scheduleRetry(iframe, attempt);
+        // Readable + has content — still likely an error in prod, retry
+        scheduleRetry(post, attempt);
       } catch (e) {
-        // Cross-origin SecurityError = LinkedIn's real embed loaded ✓
-        hidePreview(iframe);
+        // Cross-origin SecurityError = real LinkedIn embed loaded ✓
+        // Swap the polaroid body for the live iframe
+        swapToEmbed(post, iframe);
       }
     }, { once: true });
 
-    iframe.addEventListener('error', function onError() {
-      iframe.removeEventListener('error', onError);
-      scheduleRetry(iframe, attempt);
+    iframe.addEventListener('error', function () {
+      scheduleRetry(post, attempt);
     }, { once: true });
+
+    // Attach offscreen so it starts loading
+    iframe.style.position = 'absolute';
+    iframe.style.opacity  = '0';
+    iframe.style.pointerEvents = 'none';
+    document.body.appendChild(iframe);
   }
 
-  function scheduleRetry(iframe, attempt) {
+  function scheduleRetry(post, attempt) {
+    // Clean up any offscreen iframe before retrying
+    var orphan = document.body.querySelector('iframe[src="' + post.dataset.embed + '"]');
+    if (orphan) orphan.remove();
+
     if (attempt >= MAX_RETRIES) {
-      showFallback(iframe);
+      // Max retries hit — polaroid stays, nothing more to do
       return;
     }
-    setTimeout(function () {
-      loadIframe(iframe, attempt + 1);
-    }, RETRY_DELAY);
+    setTimeout(function () { loadEmbed(post, attempt + 1); }, RETRY_DELAY);
   }
 
-  // ── Fallback ────────────────────────────────────────────────
+  function swapToEmbed(post, iframe) {
+    var body = post.querySelector('.linkedin-post-body');
+    if (!body) return;
 
-  function showFallback(iframe) {
-    // Hide preview — the text fallback takes its role
-    hidePreview(iframe);
+    // Remove offscreen clone, create a fresh visible one
+    iframe.remove();
 
-    var wrapper = iframe.closest('.linkedin-embed');
-    if (!wrapper) return;
+    var container = document.createElement('div');
+    container.className = 'linkedin-embed-active';
 
-    var post    = iframe.closest('.linkedin-post');
-    var rawTitle = (post && post.dataset.title) ? post.dataset.title : '';
+    var liveIframe = document.createElement('iframe');
+    liveIframe.src = post.dataset.embed;
+    liveIframe.allowFullscreen = true;
+    liveIframe.title = post.dataset.title || 'LinkedIn post';
 
-    // Decode HTML entities (e.g. &ldquo; &amp;) for display
-    var tmp = document.createElement('textarea');
-    tmp.innerHTML = rawTitle;
-    var title = tmp.value;
+    container.appendChild(liveIframe);
 
-    wrapper.innerHTML =
-      '<div class="linkedin-embed-fallback">' +
-        (title
-          ? '<p class="fallback-quote"><em>\u201C' + title + '\u201D</em></p>' +
-            '<p class="fallback-byline">\u2014 by Leda Skenderi</p>'
-          : '<p class="fallback-byline">\u2014 by Leda Skenderi</p>'
-        ) +
-        '<span class="fallback-cta">Click the Open button to view full post</span>' +
-      '</div>';
+    // Fade the polaroid out, then replace
+    body.style.transition = 'opacity 0.3s ease';
+    body.style.opacity = '0';
+    setTimeout(function () {
+      body.replaceWith(container);
+    }, 320);
   }
 
   // ── IntersectionObserver ────────────────────────────────────
 
-  function initLinkedInEmbeds() {
-    var iframes = document.querySelectorAll('.linkedin-embed iframe[data-src]');
-    if (!iframes.length) return;
+  function init() {
+    var posts = document.querySelectorAll('.linkedin-post[data-embed]');
+    if (!posts.length) return;
 
     var staggerIndex = 0;
 
     if (!('IntersectionObserver' in window)) {
-      iframes.forEach(function (iframe) { loadIframe(iframe, 1); });
+      posts.forEach(function (post) { loadEmbed(post, 1); });
       return;
     }
 
@@ -320,26 +304,26 @@ document.addEventListener("DOMContentLoaded", () => {
       entries.forEach(function (entry) {
         if (!entry.isIntersecting) return;
 
-        var iframe = entry.target;
-        observer.unobserve(iframe);
+        var post = entry.target;
+        observer.unobserve(post);
 
         var delay = staggerIndex * STAGGER;
         staggerIndex++;
 
-        setTimeout(function () { loadIframe(iframe, 1); }, delay);
+        setTimeout(function () { loadEmbed(post, 1); }, delay);
       });
     }, {
       rootMargin: '150px 0px',
       threshold: 0
     });
 
-    iframes.forEach(function (iframe) { observer.observe(iframe); });
+    posts.forEach(function (post) { observer.observe(post); });
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initLinkedInEmbeds);
+    document.addEventListener('DOMContentLoaded', init);
   } else {
-    initLinkedInEmbeds();
+    init();
   }
 
 }());
