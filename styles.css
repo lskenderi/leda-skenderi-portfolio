@@ -1637,7 +1637,7 @@ body{
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 16px;
+  gap: 12px;
   height: 100%;
   min-height: 420px;
   text-align: center;
@@ -1645,52 +1645,40 @@ body{
   box-sizing: border-box;
 }
 
-/* Quoted post title */
+/* Quoted post title — italic, Alegreya SC, accent green */
 .linkedin-embed-fallback .fallback-quote {
   margin: 0;
   color: #A2B59A;
   font-family: "Alegreya SC", serif;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 400;
-  letter-spacing: 0.04em;
-  line-height: 1.5;
   font-style: italic;
+  letter-spacing: 0.03em;
+  line-height: 1.55;
 }
 
-/* "— by Leda Skenderi" byline */
+/* "— by Leda Skenderi" — normal weight, slightly muted */
 .linkedin-embed-fallback .fallback-byline {
   margin: 0;
-  color: rgba(162, 181, 154, 0.6);
+  color: rgba(162, 181, 154, 0.75);
   font-family: "Inter", sans-serif;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 300;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-style: normal;
+  letter-spacing: 0.04em;
 }
 
-/* "Click on Open" nudge link */
+/* Small nudge hint */
 .linkedin-embed-fallback .fallback-cta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 28px;
-  padding: 0 12px;
-  margin-top: 4px;
-
-  border-radius: 999px;
-  background: rgba(162, 181, 154, 0.10);
-  border: 1px solid rgba(162, 181, 154, 0.22);
-
-  color: var(--bg-secondary, #E7E2D8);
+  display: block;
+  margin-top: 6px;
+  color: rgba(231, 226, 216, 0.35);
   font-family: "Inter", sans-serif;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 300;
-  letter-spacing: 0.04em;
-  text-decoration: none;
-
-  transition: background 0.18s ease, border-color 0.18s ease;
-  pointer-events: none; /* it's just a label — the real "Open" button is above */
-  cursor: default;
+  font-style: normal;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 @media (max-width: 900px) {
@@ -1726,7 +1714,6 @@ body{
     letter-spacing: 0.20em;
   }
 }
-
 /* =========================
    LINKEDIN — MOBILE
 ========================= */
