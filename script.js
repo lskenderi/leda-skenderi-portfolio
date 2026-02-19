@@ -200,35 +200,35 @@ document.addEventListener("DOMContentLoaded", () => {
    * LinkedIn Embed Loader
    * ─────────────────────────────────────────────────────────────
    * Strategy:
-   *  1. IntersectionObserver loads iframes only when visible.
-   *  2. Stagger 300ms between each to avoid rate-limiting.
-   *  3. The post image acts as a placeholder — visible by default,
-   *     hidden the moment the iframe confirms a successful load.
-   *  4. On error / blank page → retry once after 4s.
-   *  5. After MAX_RETRIES failures → show text fallback,
-   *     image stays hidden (fallback replaces the embed area only).
+   *  1. Image (.linkedin-preview) is visible by default as placeholder.
+   *  2. IntersectionObserver triggers iframe load when card is near viewport.
+   *  3. Iframes are staggered 300ms apart to avoid LinkedIn rate-limiting.
+   *  4. On successful load (cross-origin block = real embed) → hide preview.
+   *  5. On blank/error page → retry once after 4s.
+   *  6. After MAX_RETRIES → show text fallback. Preview hides, fallback shows.
    * ─────────────────────────────────────────────────────────────
    */
 
-  const MAX_RETRIES = 2;
-  const RETRY_DELAY_MS = 4000;
-  const STAGGER_MS = 300;
+  var MAX_RETRIES  = 2;
+  var RETRY_DELAY  = 4000;
+  var STAGGER      = 300;
 
-  function getPlaceholder(iframe) {
-    // The <img> that sits as a sibling before .linkedin-embed in the card
+  // ── Preview helpers ─────────────────────────────────────────
+
+  function getPreview(iframe) {
     var post = iframe.closest('.linkedin-post');
-    return post ? post.querySelector('img.linkedin-placeholder') : null;
+    return post ? post.querySelector('.linkedin-preview') : null;
   }
 
-  function hidePlaceholder(iframe) {
-    var img = getPlaceholder(iframe);
-    if (img) {
-      img.style.transition = 'opacity 0.4s ease';
-      img.style.opacity = '0';
-      // Remove from flow after fade so card height collapses cleanly
-      setTimeout(function () { img.style.display = 'none'; }, 420);
-    }
+  function hidePreview(iframe) {
+    var preview = getPreview(iframe);
+    if (!preview) return;
+    preview.style.transition = 'opacity 0.4s ease';
+    preview.style.opacity = '0';
+    setTimeout(function () { preview.style.display = 'none'; }, 420);
   }
+
+  // ── Core load logic ─────────────────────────────────────────
 
   function loadIframe(iframe, attempt) {
     attempt = attempt || 1;
@@ -243,19 +243,20 @@ document.addEventListener("DOMContentLoaded", () => {
       iframe.removeEventListener('load', onLoad);
 
       try {
+        // If we can READ the document, LinkedIn returned a same-origin
+        // error page (blank). Treat as failure and retry.
         var doc = iframe.contentDocument || iframe.contentWindow.document;
         if (doc && (!doc.body || doc.body.innerHTML.trim() === '')) {
-          // Blank doc = LinkedIn error page, retry
           scheduleRetry(iframe, attempt);
           return;
         }
+        // If we CAN read it and it has content, still treat as failure
+        // (LinkedIn shouldn't be same-origin in production).
+        scheduleRetry(iframe, attempt);
       } catch (e) {
-        // Cross-origin block = real embed loaded successfully ✓
+        // Cross-origin SecurityError = LinkedIn's real embed loaded ✓
+        hidePreview(iframe);
       }
-
-      // Success — hide the placeholder image
-      hidePlaceholder(iframe);
-
     }, { once: true });
 
     iframe.addEventListener('error', function onError() {
@@ -271,27 +272,22 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     setTimeout(function () {
       loadIframe(iframe, attempt + 1);
-    }, RETRY_DELAY_MS);
+    }, RETRY_DELAY);
   }
 
-  function hidePreview(iframe) {
-    const post = iframe.closest('.linkedin-post');
-    if (!post) return;
-    const preview = post.querySelector('.linkedin-preview');
-    if (preview) preview.style.display = 'none';
-  }
+  // ── Fallback ────────────────────────────────────────────────
 
-    function showFallback(iframe) {
-    // On final failure: replace embed area with text fallback.
-    // Placeholder image also hides — fallback text takes its role.
-    hidePlaceholder(iframe);
+  function showFallback(iframe) {
+    // Hide preview — the text fallback takes its role
+    hidePreview(iframe);
 
     var wrapper = iframe.closest('.linkedin-embed');
     if (!wrapper) return;
 
-    var post = iframe.closest('.linkedin-post');
+    var post    = iframe.closest('.linkedin-post');
     var rawTitle = (post && post.dataset.title) ? post.dataset.title : '';
 
+    // Decode HTML entities (e.g. &ldquo; &amp;) for display
     var tmp = document.createElement('textarea');
     tmp.innerHTML = rawTitle;
     var title = tmp.value;
@@ -307,7 +303,7 @@ document.addEventListener("DOMContentLoaded", () => {
       '</div>';
   }
 
-  // ── IntersectionObserver setup ──────────────────────────────
+  // ── IntersectionObserver ────────────────────────────────────
 
   function initLinkedInEmbeds() {
     var iframes = document.querySelectorAll('.linkedin-embed iframe[data-src]');
@@ -327,21 +323,17 @@ document.addEventListener("DOMContentLoaded", () => {
         var iframe = entry.target;
         observer.unobserve(iframe);
 
-        var delay = staggerIndex * STAGGER_MS;
+        var delay = staggerIndex * STAGGER;
         staggerIndex++;
 
-        setTimeout(function () {
-          loadIframe(iframe, 1);
-        }, delay);
+        setTimeout(function () { loadIframe(iframe, 1); }, delay);
       });
     }, {
       rootMargin: '150px 0px',
       threshold: 0
     });
 
-    iframes.forEach(function (iframe) {
-      observer.observe(iframe);
-    });
+    iframes.forEach(function (iframe) { observer.observe(iframe); });
   }
 
   if (document.readyState === 'loading') {
