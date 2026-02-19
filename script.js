@@ -248,7 +248,7 @@ document.addEventListener("DOMContentLoaded", () => {
     var track = document.getElementById('linkedin-track');
     if (!track) return;
 
-    fetch('posts.json')
+    fetch('posts.json?v=' + Date.now())
       .then(function (res) {
         if (!res.ok) throw new Error('Could not load posts.json');
         return res.json();
