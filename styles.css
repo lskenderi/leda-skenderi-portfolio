@@ -1694,16 +1694,33 @@ body{
 
 
 /* =========================
-   LINKEDIN POST IMAGE
+   LINKEDIN POST PLACEHOLDER IMAGE
 ========================== */
 
-.linkedin-post img {
+/* Visible by default — JS fades it out on successful iframe load */
+.linkedin-placeholder {
   width: 100%;
   display: block;
   border-radius: 6px;
   flex-shrink: 0;
+  opacity: 1;
 }
 
+/* =========================
+   LINKEDIN POST IMAGE
+========================== */
+
+/* Shown by default; hidden via JS once the iframe loads successfully */
+.linkedin-preview {
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.linkedin-preview img {
+  width: 100%;
+  display: block;
+  border-radius: 6px;
+}
 /* =========================
    LINKEDIN — TABLET
 ========================= */
