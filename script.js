@@ -261,18 +261,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const wrapper = iframe.closest('.linkedin-embed');
     if (!wrapper) return;
 
-    // Pull the "Open" link href from the sibling .linkedin-post-top
     const post = iframe.closest('.linkedin-post');
-    const openLink = post ? post.querySelector('.linkedin-post-open') : null;
-    const href = openLink ? openLink.href : 'https://www.linkedin.com';
+
+    // Read the post title stored in data-title on the article element
+    const title = (post && post.dataset.title) ? post.dataset.title : '';
 
     wrapper.innerHTML =
       '<div class="linkedin-embed-fallback">' +
-        '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' +
-          '<path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.268c-.966 0-1.75-.784-1.75-1.75s.784-1.75 1.75-1.75 1.75.784 1.75 1.75-.784 1.75-1.75 1.75zm13.5 11.268h-3v-5.604c0-1.337-.027-3.059-1.864-3.059-1.865 0-2.151 1.457-2.151 2.963v5.7h-3v-10h2.881v1.367h.041c.401-.761 1.381-1.563 2.844-1.563 3.042 0 3.604 2.003 3.604 4.609v5.587z"/>' +
-        '</svg>' +
-        '<p>Preview unavailable</p>' +
-        '<a href="' + href + '" target="_blank" rel="noopener">View on LinkedIn →</a>' +
+        (title
+          ? '<p class="fallback-quote">\u201C' + title + '\u201D</p>' +
+            '<p class="fallback-byline">\u2014 by Leda Skenderi</p>'
+          : '<p class="fallback-byline">\u2014 by Leda Skenderi</p>'
+        ) +
+        '<span class="fallback-cta">Click on Open to read</span>' +
       '</div>';
   }
 
