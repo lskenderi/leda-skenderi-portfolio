@@ -194,3 +194,131 @@ document.addEventListener("DOMContentLoaded", () => {
     track.scrollBy({ left: cardStep(), behavior: "smooth" });
   });
 });
+
+(function () {
+  /**
+   * LinkedIn Embed Loader
+   * ─────────────────────────────────────────────────────────────
+   * Strategy:
+   *  1. Use IntersectionObserver to load iframes only when visible
+   *     (avoids LinkedIn rate-limiting from simultaneous requests).
+   *  2. Stagger each card's iframe by 300ms so they don't all fire
+   *     at once even when multiple are in view.
+   *  3. On error OR if the iframe loads a blank/404 page, retry
+   *     once after a 4-second delay by re-assigning src.
+   *  4. After 2 failed attempts, show a graceful fallback link
+   *     so the user can still reach the post.
+   * ─────────────────────────────────────────────────────────────
+   */
+
+  const MAX_RETRIES = 2;
+  const RETRY_DELAY_MS = 4000;
+  const STAGGER_MS = 300;
+
+  function loadIframe(iframe, attempt) {
+    attempt = attempt || 1;
+
+    const src = iframe.dataset.src;
+    if (!src) return;
+
+    // Assign (or re-assign) src to trigger a fresh load
+    iframe.src = ''; // force a reload if retrying
+    iframe.src = src;
+
+    iframe.addEventListener('load', function onLoad() {
+      iframe.removeEventListener('load', onLoad);
+
+      // Best cross-origin heuristic: if we CAN access contentDocument,
+      // LinkedIn served a same-origin error page (blank). Retry.
+      // If blocked (cross-origin), the real embed loaded successfully.
+      try {
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        if (doc && (!doc.body || doc.body.innerHTML.trim() === '')) {
+          scheduleRetry(iframe, attempt);
+        }
+      } catch (e) {
+        // Cross-origin block = LinkedIn's real embed loaded ✓
+      }
+    }, { once: true });
+
+    iframe.addEventListener('error', function onError() {
+      iframe.removeEventListener('error', onError);
+      scheduleRetry(iframe, attempt);
+    }, { once: true });
+  }
+
+  function scheduleRetry(iframe, attempt) {
+    if (attempt >= MAX_RETRIES) {
+      showFallback(iframe);
+      return;
+    }
+    setTimeout(function () {
+      loadIframe(iframe, attempt + 1);
+    }, RETRY_DELAY_MS);
+  }
+
+  function showFallback(iframe) {
+    const wrapper = iframe.closest('.linkedin-embed');
+    if (!wrapper) return;
+
+    // Pull the "Open" link href from the sibling .linkedin-post-top
+    const post = iframe.closest('.linkedin-post');
+    const openLink = post ? post.querySelector('.linkedin-post-open') : null;
+    const href = openLink ? openLink.href : 'https://www.linkedin.com';
+
+    wrapper.innerHTML =
+      '<div class="linkedin-embed-fallback">' +
+        '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' +
+          '<path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.268c-.966 0-1.75-.784-1.75-1.75s.784-1.75 1.75-1.75 1.75.784 1.75 1.75-.784 1.75-1.75 1.75zm13.5 11.268h-3v-5.604c0-1.337-.027-3.059-1.864-3.059-1.865 0-2.151 1.457-2.151 2.963v5.7h-3v-10h2.881v1.367h.041c.401-.761 1.381-1.563 2.844-1.563 3.042 0 3.604 2.003 3.604 4.609v5.587z"/>' +
+        '</svg>' +
+        '<p>Preview unavailable</p>' +
+        '<a href="' + href + '" target="_blank" rel="noopener">View on LinkedIn →</a>' +
+      '</div>';
+  }
+
+  // ── IntersectionObserver setup ──────────────────────────────
+
+  function initLinkedInEmbeds() {
+    const iframes = document.querySelectorAll('.linkedin-embed iframe[data-src]');
+    if (!iframes.length) return;
+
+    let staggerIndex = 0;
+
+    // Fallback for old browsers: load all immediately
+    if (!('IntersectionObserver' in window)) {
+      iframes.forEach(function (iframe) { loadIframe(iframe, 1); });
+      return;
+    }
+
+    const observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+
+        const iframe = entry.target;
+        observer.unobserve(iframe);
+
+        const delay = staggerIndex * STAGGER_MS;
+        staggerIndex++;
+
+        setTimeout(function () {
+          loadIframe(iframe, 1);
+        }, delay);
+      });
+    }, {
+      rootMargin: '150px 0px', // pre-load slightly before visible
+      threshold: 0
+    });
+
+    iframes.forEach(function (iframe) {
+      observer.observe(iframe);
+    });
+  }
+
+  // Run after DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLinkedInEmbeds);
+  } else {
+    initLinkedInEmbeds();
+  }
+
+}());
