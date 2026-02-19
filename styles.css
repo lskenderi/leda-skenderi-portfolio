@@ -1629,30 +1629,6 @@ body{
 }
 
 /* =========================
-   LINKEDIN — TABLET
-========================= */
-
-@media (max-width: 1180px){
-  .linkedin-layout{
-    padding: 0 32px;
-  }
-
-  .linkedin-card{
-    max-width: none;
-    width: 100%;
-  }
-
-  .linkedin-post{
-    width: 300px;
-  }
-
-  .linkedin-title{
-    font-size: 28px;
-    letter-spacing: 0.20em;
-  }
-}
-
-/* =========================
    LINKEDIN EMBED FALLBACK
 ========================== */
 
@@ -1684,6 +1660,30 @@ body{
 
 .linkedin-embed-fallback a:hover {
   text-decoration: underline;
+}
+
+/* =========================
+   LINKEDIN — TABLET
+========================= */
+
+@media (max-width: 1180px){
+  .linkedin-layout{
+    padding: 0 32px;
+  }
+
+  .linkedin-card{
+    max-width: none;
+    width: 100%;
+  }
+
+  .linkedin-post{
+    width: 300px;
+  }
+
+  .linkedin-title{
+    font-size: 28px;
+    letter-spacing: 0.20em;
+  }
 }
 
 /* =========================
