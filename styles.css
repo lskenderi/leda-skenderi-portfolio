@@ -1692,31 +1692,16 @@ body{
   }
 }
 
+
 /* =========================
-   LINKEDIN POST THUMBNAIL
+   LINKEDIN POST IMAGE
 ========================== */
 
-.linkedin-thumb {
+.linkedin-post img {
   width: 100%;
-  aspect-ratio: 1 / 1;
-  border-radius: 6px;
-  overflow: hidden;
-  background: #A2B59A; /* green accent — shows while image loads or if it fails */
-  flex-shrink: 0;
-}
-
-.linkedin-thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center top; /* favour faces/top content in portrait crops */
   display: block;
   border-radius: 6px;
-  transition: transform 0.3s ease;
-}
-
-.linkedin-post:hover .linkedin-thumb img {
-  transform: scale(1.03);
+  flex-shrink: 0;
 }
 /* =========================
    LINKEDIN — TABLET
