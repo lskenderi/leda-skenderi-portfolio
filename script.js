@@ -264,16 +264,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const post = iframe.closest('.linkedin-post');
 
     // Read the post title stored in data-title on the article element
-    const title = (post && post.dataset.title) ? post.dataset.title : '';
+    const rawTitle = (post && post.dataset.title) ? post.dataset.title : '';
+    // Decode HTML entities (e.g. &ldquo; &rdquo; &amp;) for display
+    const tmp = document.createElement('textarea');
+    tmp.innerHTML = rawTitle;
+    const title = tmp.value;
 
     wrapper.innerHTML =
       '<div class="linkedin-embed-fallback">' +
         (title
-          ? '<p class="fallback-quote">\u201C' + title + '\u201D</p>' +
+          ? '<p class="fallback-quote"><em>\u201C' + title + '\u201D</em></p>' +
             '<p class="fallback-byline">\u2014 by Leda Skenderi</p>'
           : '<p class="fallback-byline">\u2014 by Leda Skenderi</p>'
         ) +
-        '<span class="fallback-cta">Click on Open to read</span>' +
+        '<span class="fallback-cta">Click the Open button to view full post</span>' +
       '</div>';
   }
 
