@@ -197,127 +197,70 @@ document.addEventListener("DOMContentLoaded", () => {
 
 (function () {
   /**
-   * LinkedIn Embed Loader — Polaroid Strategy
+   * LinkedIn Polaroid Cards
    * ─────────────────────────────────────────────────────────────
-   * Default state: each card shows image + caption (polaroid).
-   * On successful iframe load: swap the polaroid body for the live iframe.
-   * On failure after retries: do nothing — polaroid stays, looks great.
+   * Fetches posts.json from the same folder as index.html,
+   * then renders polaroid cards into #linkedin-track.
+   *
+   * To add a new post: add one object to posts.json and commit.
+   * {
+   *   "title": "Your post title",
+   *   "image": "images/your-image.jpg",
+   *   "url":   "https://www.linkedin.com/feed/update/urn:li:activity:..."
+   * }
    * ─────────────────────────────────────────────────────────────
    */
 
-  var MAX_RETRIES = 2;
-  var RETRY_DELAY = 4000;
-  var STAGGER     = 300;
+  function buildCard(post) {
+    var article = document.createElement('article');
+    article.className = 'linkedin-post';
 
-  function loadEmbed(post, attempt) {
-    attempt = attempt || 1;
+    article.innerHTML =
+      '<div class="linkedin-post-top">' +
+        '<p class="linkedin-post-label">Post</p>' +
+        '<a class="linkedin-post-open" href="' + post.url + '" target="_blank" rel="noopener">Open</a>' +
+      '</div>' +
+      '<div class="linkedin-post-body">' +
+        '<img class="linkedin-preview" src="' + post.image + '" alt="' + escapeAttr(post.title) + '" loading="lazy">' +
+        '<div class="linkedin-caption">' +
+          '<p class="linkedin-caption-title"><em>\u201C' + escapeHtml(post.title) + '\u201D</em></p>' +
+          '<p class="linkedin-caption-by">by Leda Skenderi</p>' +
+        '</div>' +
+      '</div>';
 
-    var src = post.dataset.embed;
-    if (!src) return;
-
-    var iframe = document.createElement('iframe');
-    iframe.src = src;
-    iframe.allowFullscreen = true;
-    iframe.title = post.querySelector('.linkedin-caption-title')
-                       ? post.querySelector('.linkedin-caption-title').textContent
-                       : 'LinkedIn post';
-
-    iframe.addEventListener('load', function () {
-      try {
-        // If we can read the doc, it's a same-origin error page — retry
-        var doc = iframe.contentDocument || iframe.contentWindow.document;
-        if (doc && (!doc.body || doc.body.innerHTML.trim() === '')) {
-          scheduleRetry(post, attempt);
-          return;
-        }
-        // Readable + has content — still likely an error in prod, retry
-        scheduleRetry(post, attempt);
-      } catch (e) {
-        // Cross-origin SecurityError = real LinkedIn embed loaded ✓
-        // Swap the polaroid body for the live iframe
-        swapToEmbed(post, iframe);
-      }
-    }, { once: true });
-
-    iframe.addEventListener('error', function () {
-      scheduleRetry(post, attempt);
-    }, { once: true });
-
-    // Attach offscreen so it starts loading
-    iframe.style.position = 'absolute';
-    iframe.style.opacity  = '0';
-    iframe.style.pointerEvents = 'none';
-    document.body.appendChild(iframe);
+    return article;
   }
 
-  function scheduleRetry(post, attempt) {
-    // Clean up any offscreen iframe before retrying
-    var orphan = document.body.querySelector('iframe[src="' + post.dataset.embed + '"]');
-    if (orphan) orphan.remove();
-
-    if (attempt >= MAX_RETRIES) {
-      // Max retries hit — polaroid stays, nothing more to do
-      return;
-    }
-    setTimeout(function () { loadEmbed(post, attempt + 1); }, RETRY_DELAY);
+  function escapeHtml(str) {
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
   }
 
-  function swapToEmbed(post, iframe) {
-    var body = post.querySelector('.linkedin-post-body');
-    if (!body) return;
-
-    // Remove offscreen clone, create a fresh visible one
-    iframe.remove();
-
-    var container = document.createElement('div');
-    container.className = 'linkedin-embed-active';
-
-    var liveIframe = document.createElement('iframe');
-    liveIframe.src = post.dataset.embed;
-    liveIframe.allowFullscreen = true;
-    liveIframe.title = post.dataset.title || 'LinkedIn post';
-
-    container.appendChild(liveIframe);
-
-    // Fade the polaroid out, then replace
-    body.style.transition = 'opacity 0.3s ease';
-    body.style.opacity = '0';
-    setTimeout(function () {
-      body.replaceWith(container);
-    }, 320);
+  function escapeAttr(str) {
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/"/g, '&quot;');
   }
-
-  // ── IntersectionObserver ────────────────────────────────────
 
   function init() {
-    var posts = document.querySelectorAll('.linkedin-post[data-embed]');
-    if (!posts.length) return;
+    var track = document.getElementById('linkedin-track');
+    if (!track) return;
 
-    var staggerIndex = 0;
-
-    if (!('IntersectionObserver' in window)) {
-      posts.forEach(function (post) { loadEmbed(post, 1); });
-      return;
-    }
-
-    var observer = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (!entry.isIntersecting) return;
-
-        var post = entry.target;
-        observer.unobserve(post);
-
-        var delay = staggerIndex * STAGGER;
-        staggerIndex++;
-
-        setTimeout(function () { loadEmbed(post, 1); }, delay);
+    fetch('posts.json')
+      .then(function (res) {
+        if (!res.ok) throw new Error('Could not load posts.json');
+        return res.json();
+      })
+      .then(function (posts) {
+        posts.forEach(function (post) {
+          track.appendChild(buildCard(post));
+        });
+      })
+      .catch(function (err) {
+        console.warn('LinkedIn posts failed to load:', err);
       });
-    }, {
-      rootMargin: '150px 0px',
-      threshold: 0
-    });
-
-    posts.forEach(function (post) { observer.observe(post); });
   }
 
   if (document.readyState === 'loading') {
