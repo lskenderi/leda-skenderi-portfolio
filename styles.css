@@ -1637,29 +1637,71 @@ body{
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 16px;
   height: 100%;
-  min-height: 200px;
-  color: #666;
+  min-height: 420px;
   text-align: center;
-  padding: 24px;
+  padding: 28px 20px;
   box-sizing: border-box;
 }
 
-.linkedin-embed-fallback p {
+/* Quoted post title */
+.linkedin-embed-fallback .fallback-quote {
   margin: 0;
-  font-size: 0.9rem;
+  color: #A2B59A;
+  font-family: "Alegreya SC", serif;
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+  font-style: italic;
 }
 
-.linkedin-embed-fallback a {
-  font-size: 0.875rem;
-  color: #0a66c2;
+/* "— by Leda Skenderi" byline */
+.linkedin-embed-fallback .fallback-byline {
+  margin: 0;
+  color: rgba(162, 181, 154, 0.6);
+  font-family: "Inter", sans-serif;
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* "Click on Open" nudge link */
+.linkedin-embed-fallback .fallback-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+  padding: 0 12px;
+  margin-top: 4px;
+
+  border-radius: 999px;
+  background: rgba(162, 181, 154, 0.10);
+  border: 1px solid rgba(162, 181, 154, 0.22);
+
+  color: var(--bg-secondary, #E7E2D8);
+  font-family: "Inter", sans-serif;
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 0.04em;
   text-decoration: none;
-  font-weight: 600;
+
+  transition: background 0.18s ease, border-color 0.18s ease;
+  pointer-events: none; /* it's just a label — the real "Open" button is above */
+  cursor: default;
 }
 
-.linkedin-embed-fallback a:hover {
-  text-decoration: underline;
+@media (max-width: 900px) {
+  .linkedin-embed-fallback {
+    min-height: 360px;
+    padding: 20px 16px;
+  }
+
+  .linkedin-embed-fallback .fallback-quote {
+    font-size: 13px;
+  }
 }
 
 /* =========================
