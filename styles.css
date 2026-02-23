@@ -674,6 +674,15 @@ body{
     padding-top: 76px;
   }
 
+  .hero-wrap,
+  .about-wrap,
+  .contact-wrap,
+  .projects-wrap,
+  .linkedin-wrap{
+    padding-top: 48px;
+    padding-bottom: 56px;
+  }
+
   .brand-desktop{
     display: none;
   }
@@ -771,7 +780,7 @@ body{
 
     text-decoration: none;
     font-family: "Inter", sans-serif;
-    font-size: 18px;
+    font-size: 15px;
     font-weight: 300;
 
     transition: none;
@@ -826,11 +835,12 @@ body{
     position: absolute;
     top: 50%;
     left: 50%;
+    /* Swap width/height for 90deg rotation so the image fills the card */
+    width: 177.78%;  /* container height expressed as % of container width (16/9) */
+    height: 56.25%;  /* container width expressed as % of container height (9/16) */
     transform: translate(-50%, -50%) rotate(-90deg);
     transform-origin: center;
 
-    width: 100%;
-    height: 100%;
     object-fit: contain;
     object-position: center;
 
@@ -848,6 +858,15 @@ body{
   .hero-detail-02,
   .hero-detail-03{
     display: none;
+  }
+
+  .hero-headline{
+    font-size: 18px;
+    letter-spacing: 0.12em;
+  }
+
+  .hero-meta{
+    font-size: 13px;
   }
 
   .about-card{
@@ -911,6 +930,8 @@ body{
 
   .btn{
     width: 100%;
+    font-size: 14px;
+    min-height: 40px;
   }
 
   .cv-card{
@@ -1403,6 +1424,11 @@ body{
 ========================= */
 
 @media (max-width: 900px){
+  .project-page-wrap{
+    padding-top: 48px;
+    padding-bottom: 56px;
+  }
+
   .project-page-layout{
     padding: 0 8px;
   }
@@ -1421,6 +1447,10 @@ body{
   .project-page-title{
     font-size: 22px;
     letter-spacing: 0.18em;
+  }
+
+  .project-page-field{
+    font-size: 14px;
   }
 
   .project-page-text{
@@ -1816,5 +1846,9 @@ body{
   .linkedin-arrow{
     width: 40px;
     height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 400;
   }
 }
