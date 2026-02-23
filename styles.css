@@ -34,7 +34,7 @@ html, body{
   --pad-24: 24px;
 
   --size-logo: 32px;
-  --size-nav: 24px;
+  --size-nav: 18px;
 }
 
 /* =========================
@@ -554,18 +554,19 @@ body{
 ========================= */
 
 .site-footer{
-  background: var(--color-mahogany);
-  padding: 32px 0;
-}
-
-.site-footer{
+  background: transparent;
+  padding: 0 8px 8px;
   margin-top: 0;
 }
 
 .footer-inner{
-  max-width: var(--container);
+  background: var(--color-mahogany);
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.40);
+
+  max-width: fill;
   margin: 0 auto;
-  padding: 0 var(--pad-24);
+  padding: 24px 32px;
 
   display: flex;
   justify-content: space-between;
@@ -760,8 +761,8 @@ body{
     align-items: center;
     justify-content: center;
 
-    min-height: 44px;
-    padding: 8px 16px;
+    min-height: 38px;
+    padding: 6px 14px;
 
     border-radius: 4px;
     background: var(--bg-secondary);
@@ -770,7 +771,7 @@ body{
 
     text-decoration: none;
     font-family: "Inter", sans-serif;
-    font-size: 24px;
+    font-size: 18px;
     font-weight: 300;
 
     transition: none;
@@ -949,12 +950,12 @@ body{
   }
 
   .site-footer{
-    margin-top: 72px;
-    padding: 24px 0;
+    margin-top: 0;
+    padding: 0 8px 8px;
   }
 
   .footer-inner{
-    padding: 0 20px;
+    padding: 16px 20px;
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
@@ -1569,6 +1570,8 @@ body{
   display: flex;
   flex-direction: column;
   gap: 10px;
+  cursor: pointer;
+  text-decoration: none;
 }
 
 .linkedin-post-top{
@@ -1645,7 +1648,21 @@ body{
   gap: 0;
   border-radius: 6px;
   overflow: hidden;
-  background: #28292a;
+  background: #2F3A34;
+  transition: background-color 0.18s ease;
+}
+
+.linkedin-post:hover .linkedin-post-body {
+  background: var(--bg-secondary);
+}
+
+.linkedin-post:hover .linkedin-caption-title {
+  color: var(--text-secondary);
+}
+
+.linkedin-post:hover .linkedin-caption-by {
+  color: var(--text-primary);
+  opacity: 0.7;
 }
 
 /* Image fills full width, natural height (1:1 from Figma) */
@@ -1653,6 +1670,9 @@ body{
   width: 100%;
   display: block;
   flex-shrink: 0;
+  /* Clip the bottom to hide baked-in rounded corners in the image */
+  clip-path: inset(0 0 12px 0);
+  margin-bottom: -12px;
 }
 
 /* Caption strip — the polaroid bottom */
@@ -1661,6 +1681,7 @@ body{
   display: flex;
   flex-direction: column;
   gap: 4px;
+  min-height: 110px;
 }
 
 .linkedin-caption-title {

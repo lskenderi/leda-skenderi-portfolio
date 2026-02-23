@@ -212,13 +212,16 @@ document.addEventListener("DOMContentLoaded", () => {
    */
 
   function buildCard(post) {
-    var article = document.createElement('article');
-    article.className = 'linkedin-post';
+    var link = document.createElement('a');
+    link.className = 'linkedin-post';
+    link.href = post.url;
+    link.target = '_blank';
+    link.rel = 'noopener';
 
-    article.innerHTML =
+    link.innerHTML =
       '<div class="linkedin-post-top">' +
         '<p class="linkedin-post-label">Post</p>' +
-        '<a class="linkedin-post-open" href="' + post.url + '" target="_blank" rel="noopener">Open</a>' +
+        '<span class="linkedin-post-open">Open</span>' +
       '</div>' +
       '<div class="linkedin-post-body">' +
         '<img class="linkedin-preview" src="' + post.image + '" alt="' + escapeAttr(post.title) + '" loading="lazy">' +
@@ -228,7 +231,7 @@ document.addEventListener("DOMContentLoaded", () => {
         '</div>' +
       '</div>';
 
-    return article;
+    return link;
   }
 
   function escapeHtml(str) {
