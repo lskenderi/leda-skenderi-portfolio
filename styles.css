@@ -1535,10 +1535,15 @@ body{
 
 .linkedin-arrows{
   display: flex;
+  align-items: center;
   gap: 10px;
 }
 
 .linkedin-arrow{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
   width: 44px;
   height: 44px;
   border-radius: 4px;
@@ -1552,11 +1557,8 @@ body{
   font-family: "Inter", sans-serif;
   font-size: 18px;
   font-weight: 400;
-  line-height: 1;
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  line-height: 44px;
+  text-align: center;
 }
 
 .linkedin-arrow:focus-visible{
@@ -1846,9 +1848,7 @@ body{
   .linkedin-arrow{
     width: 40px;
     height: 40px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 400;
+    font-size: 16px;
+    line-height: 40px;
   }
 }
