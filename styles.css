@@ -861,12 +861,18 @@ body{
   }
 
   .hero-headline{
-    font-size: 18px;
-    letter-spacing: 0.12em;
+    font-size: 32px;
+    letter-spacing: 0.23em;
+    line-height: 1.2;
   }
 
   .hero-meta{
     font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .hero-textcard{
+    gap: 6px;
   }
 
   .about-card{
