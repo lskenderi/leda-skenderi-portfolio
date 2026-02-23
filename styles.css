@@ -334,7 +334,7 @@ body{
 
 .about-subheading-em{
   color: var(--text-secondary);
-  font-weight: 400;
+  font-weight: 500;
 }
 
 .about-photo{
@@ -362,6 +362,12 @@ body{
 
 .about-body p:last-child{
   margin-bottom: 0;
+}
+
+.about-body strong,
+.about-subheading strong {
+  font-weight: 500;
+  color: var(--text-secondary);
 }
 
 .about-card::after{
