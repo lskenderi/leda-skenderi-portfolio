@@ -510,45 +510,121 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 // -------------------------
-// Scroll animations (IntersectionObserver)
+// Scroll animations + Hero parallax
 // -------------------------
 document.addEventListener('DOMContentLoaded', function () {
-  // Add anim-fade-up to section cards
-  var animTargets = [
+
+  // --- Section card reveals ---
+  var cardSelectors = [
     '.about-card',
     '.contact-card',
     '.cv-card',
     '.projects-card',
     '.linkedin-card',
-    '.project-page-card',
-    '.project-pdf-card',
   ];
-
-  animTargets.forEach(function (selector) {
-    document.querySelectorAll(selector).forEach(function (el) {
+  cardSelectors.forEach(function (sel) {
+    document.querySelectorAll(sel).forEach(function (el) {
       el.classList.add('anim-fade-up');
     });
   });
 
+  // Project index cards — stagger individually
+  document.querySelectorAll('.project-card').forEach(function (el, i) {
+    el.classList.add('anim-fade-up');
+    el.style.transitionDelay = (i * 0.09) + 's';
+  });
 
+  // Project page cards — stagger sequentially down the stack
+  document.querySelectorAll('.project-page-stack > *').forEach(function (el, i) {
+    el.classList.add('anim-fade-up');
+    el.style.transitionDelay = (i * 0.12) + 's';
+  });
+
+  // IntersectionObserver reveal
   if (!('IntersectionObserver' in window)) {
-    // Fallback: just show everything
     document.querySelectorAll('.anim-fade-up').forEach(function (el) {
       el.classList.add('is-visible');
     });
-    return;
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.07, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.anim-fade-up').forEach(function (el) {
+      io.observe(el);
+    });
   }
 
-  var observer = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.08 });
+  // --- Hero detail parallax (desktop only — details are hidden via CSS on mobile) ---
+  // CSS controls opacity. JS owns ALL transform movement: entry slide-in + scroll parallax.
+  // This avoids any CSS/JS cascade conflict on the transform property.
+  var heroWrap = document.querySelector('.hero-wrap');
 
-  document.querySelectorAll('.anim-fade-up').forEach(function (el) {
-    observer.observe(el);
-  });
+  var details = [
+    { el: document.querySelector('.hero-detail-01'), tx: 18, ty: -22, ySpeed: 0.32 },
+    { el: document.querySelector('.hero-detail-02'), tx: 30, ty:   0, ySpeed: 0.52, xSpeed: 0.06 },
+    { el: document.querySelector('.hero-detail-03'), tx: 14, ty:  26, ySpeed: 0.42 },
+  ];
+
+  var hasDetails = details.some(function (d) { return d.el; });
+
+  if (heroWrap && hasDetails) {
+    var ENTRY_DELAYS   = [400, 620, 840];
+    var ENTRY_DURATION = 880;
+    var parallaxReady  = [false, false, false];
+
+    // Set entry offsets immediately (elements are opacity:0 so invisible)
+    details.forEach(function (d) {
+      if (d.el) d.el.style.transform = 'translate(' + d.tx + 'px,' + d.ty + 'px)';
+    });
+
+    // Slide each detail to its resting position, then hand off to parallax
+    details.forEach(function (d, i) {
+      if (!d.el) return;
+      setTimeout(function () {
+        if (parallaxReady[i]) return; // user already scrolled — skip entry
+        d.el.style.transition = 'transform ' + ENTRY_DURATION + 'ms cubic-bezier(0.16, 1, 0.3, 1)';
+        d.el.style.transform  = 'translate(0px, 0px)';
+
+        setTimeout(function () {
+          parallaxReady[i]      = true;
+          d.el.style.transition = '';
+          d.el.style.transform  = 'translate(0px, 0px)';
+        }, ENTRY_DURATION + 32);
+      }, ENTRY_DELAYS[i]);
+    });
+
+    function applyParallax() {
+      var sy = window.scrollY;
+      details.forEach(function (d, i) {
+        if (!d.el || !parallaxReady[i]) return;
+        var ty = -sy * d.ySpeed;
+        var tx = d.xSpeed ? sy * d.xSpeed : 0;
+        d.el.style.transform = 'translateY(' + ty + 'px)' + (tx ? ' translateX(' + tx + 'px)' : '');
+      });
+    }
+
+    var ticking = false;
+    window.addEventListener('scroll', function () {
+      // First scroll cancels any pending entry transitions and goes straight to parallax
+      details.forEach(function (d, i) {
+        if (!d.el || parallaxReady[i]) return;
+        parallaxReady[i]      = true;
+        d.el.style.transition = '';
+      });
+
+      if (!ticking) {
+        requestAnimationFrame(function () {
+          applyParallax();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+  }
 });
