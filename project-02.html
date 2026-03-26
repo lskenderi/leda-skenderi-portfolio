@@ -20,9 +20,66 @@
         <span class="brand-mobile">LS</span>
       </a>
 
-      <a class="nav-back" href="index.html#projects">Home</a>
+      <!-- Mobile hamburger -->
+      <button class="nav-toggle" aria-expanded="false" aria-controls="mobile-menu">
+        <svg class="icon icon-burger" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3 6H21" /><path d="M3 12H21" /><path d="M3 18H21" />
+        </svg>
+        <svg class="icon icon-close" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6 6L18 18" /><path d="M18 6L6 18" />
+        </svg>
+      </button>
+
+      <div class="project-nav-right">
+        <a class="nav-back" href="#pitch-deck" data-i18n="nav.pitch_deck">Pitch Deck</a>
+        <a class="nav-back" href="#contact" data-i18n="nav.contact">Contact</a>
+        <a class="nav-back" href="index.html#projects" data-i18n="nav.home">Home</a>
+        <button class="lang-toggle" id="lang-toggle" aria-label="Switch language">
+          <svg class="flag-fr" width="22" height="15" viewBox="0 0 22 15" aria-hidden="true">
+            <rect x="0"  y="0" width="8"  height="15" fill="#0055A4"/>
+            <rect x="7"  y="0" width="8"  height="15" fill="#FFFFFF"/>
+            <rect x="14" y="0" width="8"  height="15" fill="#EF4135"/>
+          </svg>
+          <svg class="flag-en" width="22" height="15" viewBox="0 0 22 15" aria-hidden="true">
+            <rect width="22" height="15" fill="#012169"/>
+            <path d="M0,0 L22,15 M22,0 L0,15" stroke="#fff" stroke-width="3"/>
+            <path d="M0,0 L22,15 M22,0 L0,15" stroke="#C8102E" stroke-width="1.8"/>
+            <rect x="9" y="0" width="4" height="15" fill="#fff"/>
+            <rect x="0" y="5.5" width="22" height="4" fill="#fff"/>
+            <rect x="10" y="0" width="2" height="15" fill="#C8102E"/>
+            <rect x="0" y="6.5" width="22" height="2" fill="#C8102E"/>
+          </svg>
+          <span class="lang-label">FR</span>
+        </button>
+      </div>
     </div>
   </header>
+
+  <!-- Mobile dropdown -->
+  <div class="mobile-menu" id="mobile-menu">
+    <div class="menu-inner">
+      <a href="#pitch-deck" data-i18n="nav.pitch_deck">Pitch Deck</a>
+      <a href="#contact" data-i18n="nav.contact">Contact</a>
+      <a href="index.html#projects" data-i18n="nav.home">Home</a>
+      <button class="lang-toggle lang-toggle-mobile" id="lang-toggle-mobile" aria-label="Switch language">
+        <svg class="flag-fr" width="22" height="15" viewBox="0 0 22 15" aria-hidden="true">
+          <rect x="0"  y="0" width="8"  height="15" fill="#0055A4"/>
+          <rect x="7"  y="0" width="8"  height="15" fill="#FFFFFF"/>
+          <rect x="14" y="0" width="8"  height="15" fill="#EF4135"/>
+        </svg>
+        <svg class="flag-en" width="22" height="15" viewBox="0 0 22 15" aria-hidden="true">
+          <rect width="22" height="15" fill="#012169"/>
+          <path d="M0,0 L22,15 M22,0 L0,15" stroke="#fff" stroke-width="3"/>
+          <path d="M0,0 L22,15 M22,0 L0,15" stroke="#C8102E" stroke-width="1.8"/>
+          <rect x="9" y="0" width="4" height="15" fill="#fff"/>
+          <rect x="0" y="5.5" width="22" height="4" fill="#fff"/>
+          <rect x="10" y="0" width="2" height="15" fill="#C8102E"/>
+          <rect x="0" y="6.5" width="22" height="2" fill="#C8102E"/>
+        </svg>
+        <span class="lang-label">FR</span>
+      </button>
+    </div>
+  </div>
 
   <main>
     <!-- =========================
@@ -35,32 +92,50 @@
           <!-- TEXT CARD -->
           <div class="project-page-card">
             <div class="project-page-inner">
-              <h1 class="project-page-title">L’INTIMITÉ EST MORTE, VIVE L’INTIMITÉ</h1>
-              <p class="project-page-field">Trend Forecasting</p>
+              <h1 class="project-page-title" data-i18n="p2.title">L’INTIMITÉ EST MORTE, VIVE L’INTIMITÉ</h1>
+              <p class="project-page-field" data-i18n="project2.field">Trend Forecasting</p>
 
-              <p class="project-page-text">
+              <p class="project-page-text" data-i18n="p2.p1">
                 This project was developed as part of a trend analysis assignment and explores the concept of Intimacy Collapse—a cultural shift in which the boundary between private and public life erodes under the effects of hyperconnectivity, oversharing, and the attention economy.
               </p>
 
-              <p class="project-page-text">
+              <p class="project-page-text" data-i18n="p2.p2">
                 My work focused on analyzing this societal transformation—emotional, bodily, and aesthetic—and translating it into fashion, beauty, and experiential signals. I structured the project around a central concept supported by cultural, artistic, and media references, and developed fashion, beauty, and scenography moodboards expressing transparency, vulnerability, and the body as a social language.
               </p>
 
-              <p class="project-page-text">
+              <p class="project-page-text" data-i18n="p2.p3">
                 This project demonstrates my ability to decode complex cultural dynamics and transform them into coherent, actionable creative directions for fashion and communication.
               </p>
             </div>
           </div>
 
-          <!-- PDF CARD -->
-          <div class="project-pdf-card">
+          <!-- PRESENTATION CARD -->
+          <div id="pitch-deck" class="project-pdf-card">
             <div class="project-pdf-inner">
-              <div class="project-pdf-header">
-                <h2 class="project-pdf-title">Project PDF</h2>
+              <div class="project-canva-wrapper">
+                <iframe
+                  loading="lazy"
+                  src="https://www.canva.com/design/DAHFCmijeWA/QYYbu2qxQ3lRlfLMMF3WIQ/view?embed"
+                  allowfullscreen="allowfullscreen"
+                  allow="fullscreen">
+                </iframe>
               </div>
+            </div>
+          </div>
 
-              <div class="project-pdf-viewer">
-                <iframe class="project-pdf" src="assets/project-02.pdf"></iframe>
+          <!-- CONTACT CARD -->
+          <div id="contact" class="contact-card">
+            <div class="contact-inner">
+              <h2 class="contact-title" data-i18n="contact.title">CONTACT</h2>
+              <p class="contact-lead" data-i18n="contact.lead">
+                I am open to discussing <strong>luxury brand strategy</strong>, <strong>sustainability integration</strong> and <strong>product development</strong>.
+              </p>
+              <p class="contact-sub" data-i18n="contact.sub">
+                For professional inquiries, collaborations, or opportunities you can reach out to me via:
+              </p>
+              <div class="contact-cta">
+                <a class="btn btn-light" href="https://mail.google.com/mail/?view=cm&to=ledaskenderi@yahoo.com" target="_blank" rel="noopener noreferrer" data-i18n="contact.email">Email</a>
+                <a class="btn btn-light" href="https://www.linkedin.com/in/leda-skenderi-77784320b/" target="_blank" rel="noopener noreferrer" data-i18n="contact.linkedin">LinkedIn</a>
               </div>
             </div>
           </div>
@@ -75,9 +150,11 @@
   ========================== -->
   <footer class="site-footer">
     <div class="footer-inner">
-      <div class="footer-text">Property of Leda Skenderi</div>
-      <div class="footer-credit">Creative Copyright AS © 2026</div>
+      <div class="footer-text" data-i18n="footer.text">Property of Leda Skenderi</div>
+      <div class="footer-credit" data-i18n="footer.credit">Creative Copyright A.Slimani © 2026</div>
     </div>
   </footer>
+
+<script src="script.js"></script>
 </body>
 </html>

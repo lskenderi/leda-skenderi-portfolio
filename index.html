@@ -39,10 +39,27 @@
     </button>
 
     <nav class="nav" id="site-nav">
-      <a href="#about" class="nav-link">About</a>
-      <a href="#contact" class="nav-link">Contact</a>
-      <a href="#projects" class="nav-link">Projects</a>
-      <a href="#linkedin" class="nav-link">LinkedIn</a>
+      <a href="#about" class="nav-link" data-i18n="nav.about">About</a>
+      <a href="#contact" class="nav-link" data-i18n="nav.contact">Contact</a>
+      <a href="#projects" class="nav-link" data-i18n="nav.projects">Projects</a>
+      <a href="#linkedin" class="nav-link" data-i18n="nav.linkedin">LinkedIn</a>
+      <button class="lang-toggle" id="lang-toggle" aria-label="Switch language">
+        <svg class="flag-fr" width="22" height="15" viewBox="0 0 22 15" aria-hidden="true">
+          <rect x="0"  y="0" width="8"  height="15" fill="#0055A4"/>
+          <rect x="7"  y="0" width="8"  height="15" fill="#FFFFFF"/>
+          <rect x="14" y="0" width="8"  height="15" fill="#EF4135"/>
+        </svg>
+        <svg class="flag-en" width="22" height="15" viewBox="0 0 22 15" aria-hidden="true">
+          <rect width="22" height="15" fill="#012169"/>
+          <path d="M0,0 L22,15 M22,0 L0,15" stroke="#fff" stroke-width="3"/>
+          <path d="M0,0 L22,15 M22,0 L0,15" stroke="#C8102E" stroke-width="1.8"/>
+          <rect x="9" y="0" width="4" height="15" fill="#fff"/>
+          <rect x="0" y="5.5" width="22" height="4" fill="#fff"/>
+          <rect x="10" y="0" width="2" height="15" fill="#C8102E"/>
+          <rect x="0" y="6.5" width="22" height="2" fill="#C8102E"/>
+        </svg>
+        <span class="lang-label">FR</span>
+      </button>
     </nav>
   </div>
 </header>
@@ -50,10 +67,27 @@
 <!-- Mobile dropdown -->
 <div class="mobile-menu" id="mobile-menu">
   <div class="menu-inner">
-    <a href="#about">About</a>
-    <a href="#contact">Contact</a>
-    <a href="#projects">Projects</a>
-    <a href="#linkedin">LinkedIn</a>
+    <a href="#about" data-i18n="nav.about">About</a>
+    <a href="#contact" data-i18n="nav.contact">Contact</a>
+    <a href="#projects" data-i18n="nav.projects">Projects</a>
+    <a href="#linkedin" data-i18n="nav.linkedin">LinkedIn</a>
+    <button class="lang-toggle lang-toggle-mobile" id="lang-toggle-mobile" aria-label="Switch language">
+      <svg class="flag-fr" width="22" height="15" viewBox="0 0 22 15" aria-hidden="true">
+        <rect x="0"  y="0" width="8"  height="15" fill="#0055A4"/>
+        <rect x="7"  y="0" width="8"  height="15" fill="#FFFFFF"/>
+        <rect x="14" y="0" width="8"  height="15" fill="#EF4135"/>
+      </svg>
+      <svg class="flag-en" width="22" height="15" viewBox="0 0 22 15" aria-hidden="true">
+        <rect width="22" height="15" fill="#012169"/>
+        <path d="M0,0 L22,15 M22,0 L0,15" stroke="#fff" stroke-width="3"/>
+        <path d="M0,0 L22,15 M22,0 L0,15" stroke="#C8102E" stroke-width="1.8"/>
+        <rect x="9" y="0" width="4" height="15" fill="#fff"/>
+        <rect x="0" y="5.5" width="22" height="4" fill="#fff"/>
+        <rect x="10" y="0" width="2" height="15" fill="#C8102E"/>
+        <rect x="0" y="6.5" width="22" height="2" fill="#C8102E"/>
+      </svg>
+      <span class="lang-label">FR</span>
+    </button>
   </div>
 </div>
 
@@ -78,20 +112,20 @@
     <img class="hero-detail hero-detail-03" src="images/detail-03.png" alt="" aria-hidden="true">
 
     <div class="hero-textcard">
-      <h1 class="hero-headline">
+      <h1 class="hero-headline" data-i18n="hero.headline">
         FASHION PRODUCT DEVELOPMENT<br>
         &amp; RESPONSIBLE INNOVATION
       </h1>
 
       <p class="hero-meta">
-        <span class="meta-primary">
+        <span class="meta-primary" data-i18n="hero.meta1">
           From materials to market, contributing to collections that align creativity, sustainability, and business strategy.
         </span>
         <br>
-        <span class="meta-secondary">
+        <span class="meta-secondary" data-i18n="hero.meta2">
           MBA Candidate in Luxury Goods and Fashion Industries,
         </span>
-        <span class="meta-primary">
+        <span class="meta-primary" data-i18n="hero.meta3">
           MODART International.
         </span>
       </p>
@@ -108,11 +142,11 @@
   <div class="about-layout">
     <div class="about-card">
 
-      <h2 class="about-title">ABOUT</h2>
+      <h2 class="about-title" data-i18n="about.title">ABOUT</h2>
 
       <img class="about-photo" src="images/about.jpg" alt="Portrait" />
 
-      <p class="about-subheading">
+      <p class="about-subheading" data-i18n="about.subheading">
         My expertise exists at the intersection of
         <strong>luxury strategy</strong>,
         <strong>sustainability</strong>,
@@ -121,15 +155,15 @@
 
       <div class="about-body">
 
-        <p>
+        <p data-i18n="about.p1">
           With a background in life sciences and an MBA in luxury goods and fashion industries, I bring an <strong>analytical approach to problem solving</strong>, whether that is applied to brand or product development. My studies and professional experiences trained me in <strong>systems thinking</strong> and <strong>sustainable strategies for long-term impact</strong>. Today, I apply that mindset to the evolving challenges in the luxury sector.
         </p>
 
-        <p>
+        <p data-i18n="about.p2">
           I am particularly interested in how consumer expectations are shifting toward transparency, material literacy, and cultural relevance. <strong>As sustainability moves from narrative to necessity, brands must rethink not only what they produce, but how they position, communicate, and operationalize responsibility.</strong>
         </p>
 
-        <p>
+        <p data-i18n="about.p3">
           <strong>I am building a career dedicated to shaping brands that are not only desirable, but responsible and structurally intelligent.</strong>
         </p>
 
@@ -147,23 +181,24 @@
     <div class="contact-card">
       <div class="contact-inner">
 
-        <h2 class="contact-title">CONTACT</h2>
+        <h2 class="contact-title" data-i18n="contact.title">CONTACT</h2>
 
-        <p class="contact-lead">
+        <p class="contact-lead" data-i18n="contact.lead">
           I am open to discussing <strong>luxury brand strategy</strong>, <strong>sustainability integration</strong> and <strong>product development</strong>.
         </p>
 
-        <p class="contact-sub">
+        <p class="contact-sub" data-i18n="contact.sub">
           For professional inquiries, collaborations, or opportunities you can reach out to me via:
         </p>
 
         <div class="contact-cta">
-          <a class="btn btn-light" href="https://mail.google.com/mail/?view=cm&to=ledaskenderi@yahoo.com" target="_blank" rel="noopener noreferrer">Email</a>
+          <a class="btn btn-light" href="https://mail.google.com/mail/?view=cm&to=ledaskenderi@yahoo.com" target="_blank" rel="noopener noreferrer" data-i18n="contact.email">Email</a>
 
           <a class="btn btn-light"
              href="https://www.linkedin.com/in/leda-skenderi-77784320b/"
              target="_blank"
-             rel="noopener noreferrer">
+             rel="noopener noreferrer"
+             data-i18n="contact.linkedin">
              LinkedIn
           </a>
         </div>
@@ -178,20 +213,20 @@
     <div class="cv-inner">
 
       <div class="cv-header">
-        <h2 class="cv-title">CURRICULUM VITAE</h2>
+        <h2 class="cv-title" data-i18n="cv.title">CURRICULUM VITAE</h2>
 
         <div class="cv-actions">
-          <a class="btn" href="assets/CV.pdf" target="_blank" rel="noopener noreferrer">
+          <a class="btn" href="assets/CV.pdf" target="_blank" rel="noopener noreferrer" data-i18n="cv.open">
             Open PDF
           </a>
-          <a class="btn" href="assets/CV.pdf" download>
+          <a class="btn" href="assets/CV.pdf" download data-i18n="cv.download">
             Download
           </a>
         </div>
       </div>
 
       <div class="cv-viewer">
-        <img class="cv-img" src="images/CV.png" alt="Leda Skenderi CV">
+        <img class="cv-img" src="images/CV.png" alt="Curriculum Vitae">
       </div>
 
     </div>
@@ -206,13 +241,13 @@
   <div class="projects-layout">
 
     <div class="projects-card">
-      <h2 class="projects-title">PROJECTS</h2>
+      <h2 class="projects-title" data-i18n="projects.title">PROJECTS</h2>
 
       <a class="project-card" href="project-01.html">
         <img class="project-img" src="images/project-01.png" alt="">
         <h3 class="project-name">STELLA MCCARTNEY × MARLBORO</h3>
-        <p class="project-field">Strategic Marketing &amp; Sustainable Development</p>
-        <p class="project-desc">
+        <p class="project-field" data-i18n="project1.field">Strategic Marketing &amp; Sustainable Development</p>
+        <p class="project-desc" data-i18n="project1.desc">
           Inspired by my LinkedIn post “Sustainability is like smoking,” this conceptual project explores the idea that sustainability progresses through systems rather than moral messaging.
         </p>
       </a>
@@ -220,17 +255,17 @@
       <a class="project-card" href="project-02.html">
         <img class="project-img" src="images/project-02.png" alt="">
         <h3 class="project-name">L’INTIMITÉ EST MORTE, VIVE L’INTIMITÉ</h3>
-        <p class="project-field">Trend Forecasting</p>
-        <p class="project-desc">
+        <p class="project-field" data-i18n="project2.field">Trend Forecasting</p>
+        <p class="project-desc" data-i18n="project2.desc">
           Trend analysis project exploring how digital hyperexposure transforms intimacy into cultural material.
         </p>
       </a>
 
       <a class="project-card" href="project-03.html">
         <img class="project-img" src="images/project-03.png" alt="">
-        <h3 class="project-name">Chanel Capsule — CourchevelL</h3>
-        <p class="project-field">Merchandising Strategy</p>
-        <p class="project-desc">
+        <h3 class="project-name">Chanel Capsule — Courchevel</h3>
+        <p class="project-field" data-i18n="project3.field">Merchandising Strategy</p>
+        <p class="project-desc" data-i18n="project3.desc">
           Strategic merchandising project focused on a Chanel capsule collection in a seasonal retail setting.
         </p>
       </a>
@@ -238,8 +273,8 @@
       <a class="project-card" href="project-04.html">
         <img class="project-img" src="images/project-04.png" alt="">
         <h3 class="project-name">DEADWOOD PROJECT</h3>
-        <p class="project-field">Marketing Analysis</p>
-        <p class="project-desc">
+        <p class="project-field" data-i18n="project4.field">Marketing Analysis</p>
+        <p class="project-desc" data-i18n="project4.desc">
           Strategic marketing project analyzing the international expansion potential of Deadwood Studios, a sustainable fashion brand specializing in upcycled leather.
         </p>
       </a>
@@ -258,7 +293,7 @@
 
       <!-- Top Row: Title + Arrows -->
       <div class="linkedin-carousel-top">
-        <h2 class="linkedin-title">LINKEDIN</h2>
+        <h2 class="linkedin-title" data-i18n="linkedin.title">LINKEDIN</h2>
         <div class="linkedin-arrows">
           <button class="linkedin-arrow prev" type="button" aria-label="Previous posts">←</button>
           <button class="linkedin-arrow next" type="button" aria-label="Next posts">→</button>
@@ -279,10 +314,10 @@
 ========================== -->
 <footer class="site-footer">
   <div class="footer-inner">
-    <div class="footer-text">
+    <div class="footer-text" data-i18n="footer.text">
       Property of Leda Skenderi
     </div>
-    <div class="footer-credit">
+    <div class="footer-credit" data-i18n="footer.credit">
       Creative Copyright A.Slimani © 2026
     </div>
   </div>

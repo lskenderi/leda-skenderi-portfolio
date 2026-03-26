@@ -20,9 +20,68 @@
         <span class="brand-mobile">LS</span>
       </a>
 
-      <a class="nav-back" href="index.html#projects">Home</a>
+      <!-- Mobile hamburger -->
+      <button class="nav-toggle" aria-expanded="false" aria-controls="mobile-menu">
+        <svg class="icon icon-burger" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3 6H21" /><path d="M3 12H21" /><path d="M3 18H21" />
+        </svg>
+        <svg class="icon icon-close" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6 6L18 18" /><path d="M18 6L6 18" />
+        </svg>
+      </button>
+
+      <div class="project-nav-right">
+        <a class="nav-back" href="#pitch-deck" data-i18n="nav.pitch_deck">Pitch Deck</a>
+        <a class="nav-back" href="#video" data-i18n="nav.video">Video</a>
+        <a class="nav-back" href="#contact" data-i18n="nav.contact">Contact</a>
+        <a class="nav-back" href="index.html#projects" data-i18n="nav.home">Home</a>
+        <button class="lang-toggle" id="lang-toggle" aria-label="Switch language">
+          <svg class="flag-fr" width="22" height="15" viewBox="0 0 22 15" aria-hidden="true">
+            <rect x="0"  y="0" width="8"  height="15" fill="#0055A4"/>
+            <rect x="7"  y="0" width="8"  height="15" fill="#FFFFFF"/>
+            <rect x="14" y="0" width="8"  height="15" fill="#EF4135"/>
+          </svg>
+          <svg class="flag-en" width="22" height="15" viewBox="0 0 22 15" aria-hidden="true">
+            <rect width="22" height="15" fill="#012169"/>
+            <path d="M0,0 L22,15 M22,0 L0,15" stroke="#fff" stroke-width="3"/>
+            <path d="M0,0 L22,15 M22,0 L0,15" stroke="#C8102E" stroke-width="1.8"/>
+            <rect x="9" y="0" width="4" height="15" fill="#fff"/>
+            <rect x="0" y="5.5" width="22" height="4" fill="#fff"/>
+            <rect x="10" y="0" width="2" height="15" fill="#C8102E"/>
+            <rect x="0" y="6.5" width="22" height="2" fill="#C8102E"/>
+          </svg>
+          <span class="lang-label">FR</span>
+        </button>
+      </div>
     </div>
   </header>
+
+  <!-- Mobile dropdown -->
+  <div class="mobile-menu" id="mobile-menu">
+    <div class="menu-inner">
+      <a href="#pitch-deck" data-i18n="nav.pitch_deck">Pitch Deck</a>
+      <a href="#video" data-i18n="nav.video">Video</a>
+      <a href="#contact" data-i18n="nav.contact">Contact</a>
+      <a href="index.html#projects" data-i18n="nav.home">Home</a>
+      <button class="lang-toggle lang-toggle-mobile" id="lang-toggle-mobile" aria-label="Switch language">
+        <svg class="flag-fr" width="22" height="15" viewBox="0 0 22 15" aria-hidden="true">
+          <rect x="0"  y="0" width="8"  height="15" fill="#0055A4"/>
+          <rect x="7"  y="0" width="8"  height="15" fill="#FFFFFF"/>
+          <rect x="14" y="0" width="8"  height="15" fill="#EF4135"/>
+        </svg>
+        <svg class="flag-en" width="22" height="15" viewBox="0 0 22 15" aria-hidden="true">
+          <rect width="22" height="15" fill="#012169"/>
+          <path d="M0,0 L22,15 M22,0 L0,15" stroke="#fff" stroke-width="3"/>
+          <path d="M0,0 L22,15 M22,0 L0,15" stroke="#C8102E" stroke-width="1.8"/>
+          <rect x="9" y="0" width="4" height="15" fill="#fff"/>
+          <rect x="0" y="5.5" width="22" height="4" fill="#fff"/>
+          <rect x="10" y="0" width="2" height="15" fill="#C8102E"/>
+          <rect x="0" y="6.5" width="22" height="2" fill="#C8102E"/>
+        </svg>
+        <span class="lang-label">FR</span>
+      </button>
+    </div>
+  </div>
 
   <main>
     <!-- =========================
@@ -35,41 +94,40 @@
           <!-- TEXT CARD -->
           <div class="project-page-card">
             <div class="project-page-inner">
-              <h1 class="project-page-title">Stella McCartney × Marlboro</h1>
-              <p class="project-page-field">Strategic Marketing & Sustainability Development</p>
+              <h1 class="project-page-title" data-i18n="p1.title">Stella McCartney × Marlboro</h1>
+              <p class="project-page-field" data-i18n="project1.field">Strategic Marketing & Sustainability Development</p>
 
-              <p class="project-page-text">
+              <p class="project-page-text" data-i18n="p1.p1">
                 This conceptual project was developed as part of the Fashion Communication course and originated from a personal LinkedIn post titled “Sustainability is like smoking.” In this reflection, I argued that awareness alone does not drive behavioral change; instead, systems, social norms, and structural constraints are what enable real transformation.
               </p>
 
-              <p class="project-page-text">
+              <p class="project-page-text" data-i18n="p1.p2">
                 Building on this idea, I imagined a fictional collaboration between Stella McCartney and Marlboro, repurposing a historically harmful symbol into a tool for awareness and material innovation. The cigarette butt—an emblematic pollutant—is reimagined as a responsible, innovative material integrated into a fashion capsule and a broader communication strategy.
               </p>
 
-              <p class="project-page-text">
+              <p class="project-page-text" data-i18n="p1.p3">
                 My approach combined brand DNA analysis, material innovation research, critical storytelling, and the development of products and activations designed to make sustainability more visible, desirable, and culturally embedded. This project illustrates my ability to translate systemic, critical thinking into a coherent creative concept within a luxury context.
               </p>
             </div>
           </div>
 
-          <!-- PDF CARD -->
-          <div class="project-pdf-card">
+          <!-- PRESENTATION CARD -->
+          <div id="pitch-deck" class="project-pdf-card">
             <div class="project-pdf-inner">
-              <div class="project-pdf-header">
-                <h2 class="project-pdf-title">Project PDF</h2>
-              </div>
-
-              <div class="project-pdf-viewer">
-                <iframe class="project-pdf" src="assets/project-01.pdf"></iframe>
+              <div class="project-canva-wrapper">
+                <iframe
+                  loading="lazy"
+                  src="https://www.canva.com/design/DAHFCr6zykg/iHkZjWdEsTvkrrFLPlH4IQ/view?embed"
+                  allowfullscreen="allowfullscreen"
+                  allow="fullscreen">
+                </iframe>
               </div>
             </div>
           </div>
-   <!-- VIDEO CARD -->
-          <div class="project-pdf-card">
-            <div class="project-pdf-inner">
-              <div class="project-pdf-header">
-              </div>
 
+          <!-- VIDEO CARD -->
+          <div id="video" class="project-pdf-card">
+            <div class="project-pdf-inner">
               <div class="project-video-wrapper">
                 <iframe 
                   src="https://www.youtube.com/embed/ZPTimcNYNfM?si=amjLj_op-VOBedIX"
@@ -81,22 +139,38 @@
               </div>
             </div>
           </div>
+          <!-- CONTACT CARD -->
+          <div id="contact" class="contact-card">
+            <div class="contact-inner">
+              <h2 class="contact-title" data-i18n="contact.title">CONTACT</h2>
+              <p class="contact-lead" data-i18n="contact.lead">
+                I am open to discussing <strong>luxury brand strategy</strong>, <strong>sustainability integration</strong> and <strong>product development</strong>.
+              </p>
+              <p class="contact-sub" data-i18n="contact.sub">
+                For professional inquiries, collaborations, or opportunities you can reach out to me via:
+              </p>
+              <div class="contact-cta">
+                <a class="btn btn-light" href="https://mail.google.com/mail/?view=cm&to=ledaskenderi@yahoo.com" target="_blank" rel="noopener noreferrer" data-i18n="contact.email">Email</a>
+                <a class="btn btn-light" href="https://www.linkedin.com/in/leda-skenderi-77784320b/" target="_blank" rel="noopener noreferrer" data-i18n="contact.linkedin">LinkedIn</a>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
   </main>
-
-          
-
 
   <!-- =========================
        FOOTER
   ========================== -->
   <footer class="site-footer">
     <div class="footer-inner">
-      <div class="footer-text">Property of Leda Skenderi</div>
-      <div class="footer-credit">Creative Copyright AS © 2026</div>
+      <div class="footer-text" data-i18n="footer.text">Property of Leda Skenderi</div>
+      <div class="footer-credit" data-i18n="footer.credit">Creative Copyright A.Slimani © 2026</div>
     </div>
   </footer>
+
+<script src="script.js"></script>
 </body>
 </html>

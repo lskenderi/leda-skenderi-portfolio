@@ -332,10 +332,6 @@ body{
   line-height: normal;
 }
 
-.about-subheading-em{
-  color: var(--text-secondary);
-  font-weight: 500;
-}
 
 .about-photo{
   float: right;
@@ -398,7 +394,7 @@ body{
   max-width: 1176px;
   margin: 0 auto;
 
-  background: var(--hero-dark);
+  background: var(--card-gray);
   border-radius: 12px;
   box-shadow: 0 11px 12px rgba(0, 0, 0, 0.40);
 
@@ -495,7 +491,7 @@ body{
   max-width: 1176px;
   margin: 16px auto 0;
 
-  background: var(--hero-dark);
+  background: var(--card-gray);
   border-radius: 12px;
   box-shadow: 0 11px 12px rgba(0,0,0,0.40);
 
@@ -546,7 +542,9 @@ body{
   display: block;
   width: 100%;
   height: auto;
-  max-width: 100%;
+  border-radius: 8px;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
 }
 
 /* =========================
@@ -554,7 +552,9 @@ body{
 ========================= */
 
 .site-footer{
-  background: transparent;
+  position: relative;
+  z-index: 50;
+  background: var(--bg-secondary);
   padding: 0 8px 8px;
   margin-top: 0;
 }
@@ -861,9 +861,10 @@ body{
   }
 
   .hero-headline{
-    font-size: 32px;
-    letter-spacing: 0.23em;
-    line-height: 1.2;
+    font-size: clamp(18px, 5.5vw, 32px);
+    letter-spacing: 0.1em;
+    line-height: 1.25;
+    overflow-wrap: break-word;
   }
 
   .hero-meta{
@@ -1272,55 +1273,8 @@ body{
   gap: 20px;
 }
 
-.project-pdf-header{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 24px;
-}
-
-.project-pdf-title{
-  margin: 0;
-  color: var(--bg-secondary);
-  font-family: "Alegreya SC", serif;
-  font-size: 24px;
-  font-weight: 400;
-  letter-spacing: 5.52px;
-  text-transform: uppercase;
-}
-
-.project-pdf-actions{
-  display: flex;
-  gap: 16px;
-}
-
-.project-pdf-viewer{
-  width: 100%;
-  overflow: hidden;
-  border-radius: 8px;
-  background: var(--card-gray);
-}
-
-.project-pdf{
-  width: 100%;
-  height: 780px;
-  border: 0;
-  display: block;
-  background: var(--card-gray);
-}
 
 /* project header variant */
-.header-inner.is-project{
-  max-width: var(--container);
-  margin: 0 auto;
-  padding: var(--pad-24);
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-}
-
 .nav-back{
   color: var(--color-light);
   font-family: "Inter", sans-serif;
@@ -1335,46 +1289,12 @@ body{
   text-underline-offset: 0.25em;
 }
 
-/* =========================
-   PROJECT VIDEO (same card system as PDF)
-========================= */
-
-.project-video-card{
-  width: 100%;
-  background: var(--card-gray);
-  border-radius: 12px;
-  box-shadow: 0 11px 12px rgba(0, 0, 0, 0.40);
-  padding: 32px;
-}
-
-.project-video-inner{
-  width: 100%;
-  padding: 32px 40px;
-
-  border-radius: 12px;
-  border: 2px solid var(--bg-secondary);
-
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.project-video-header{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-}
-
-.project-video-title{
-  margin: 0;
-  color: var(--bg-secondary);
-  font-family: "Alegreya SC", serif;
-  font-size: 24px;
+.nav-back.is-active{
   font-weight: 400;
-  letter-spacing: 5.52px;
-  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
 }
+
 
 /* responsive + visually smaller */
 .project-video-wrapper{
@@ -1415,14 +1335,13 @@ body{
     width: 100%;
   }
 
-  .project-pdf{
-    height: 700px;
-  }
-
-  .project-video-wrapper iframe{
-  height: 460px;
 }
 
+/* project pages: right-side nav group */
+.project-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 32px;
 }
 
 /* =========================
@@ -1430,6 +1349,10 @@ body{
 ========================= */
 
 @media (max-width: 900px){
+  .project-nav-right{
+    display: none;
+  }
+
   .project-page-wrap{
     padding-top: 48px;
     padding-bottom: 56px;
@@ -1462,30 +1385,6 @@ body{
   .project-page-text{
     font-size: 15px;
   }
-
-  .project-pdf-header{
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-  }
-
-  .project-pdf-actions{
-    width: 100%;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .project-pdf-actions .btn{
-    width: 100%;
-  }
-
-  .project-pdf{
-    height: 520px;
-  }
-
-.project-video-wrapper iframe{
-  height: 280px;
-}
 
 }
 
@@ -1654,26 +1553,6 @@ body{
   text-underline-offset: 0.25em;
 }
 
-.linkedin-embed{
-  width: 100%;
-  border-radius: 6px;
-  overflow: hidden;
-
-  min-height: 420px;
-  background: rgba(245, 243, 239, 0.06);
-  border: 1px solid rgba(231, 226, 216, 0.12);
-
-  display: flex;
-  align-items: stretch;
-  justify-content: stretch;
-}
-
-.linkedin-embed iframe{
-  width: 100%;
-  height: 100%;
-  border: 0;
-  display: block;
-}
 
 /* =========================
    LINKEDIN POLAROID CARD
@@ -1741,23 +1620,6 @@ body{
   letter-spacing: 0.06em;
 }
 
-/* When iframe loads successfully it replaces .linkedin-post-body */
-.linkedin-embed-active {
-  width: 100%;
-  min-height: 420px;
-  border-radius: 6px;
-  overflow: hidden;
-  background: rgba(245, 243, 239, 0.06);
-  border: 1px solid rgba(231, 226, 216, 0.12);
-}
-
-.linkedin-embed-active iframe {
-  width: 100%;
-  height: 100%;
-  min-height: 420px;
-  border: 0;
-  display: block;
-}
 
 /* =========================
    LINKEDIN POLAROID — TABLET
@@ -1768,10 +1630,6 @@ body{
     font-size: 12px;
   }
 
-  .linkedin-embed-active,
-  .linkedin-embed-active iframe {
-    min-height: 380px;
-  }
 }
 
 /* =========================
@@ -1791,10 +1649,6 @@ body{
     font-size: 10px;
   }
 
-  .linkedin-embed-active,
-  .linkedin-embed-active iframe {
-    min-height: 340px;
-  }
 }
 
 /* =========================
@@ -1847,10 +1701,6 @@ body{
     max-width: 360px;
   }
 
-  .linkedin-embed{
-    min-height: 460px;
-  }
-
   .linkedin-arrow{
     width: 40px;
     height: 40px;
@@ -1860,3 +1710,134 @@ body{
 } 
 
 
+
+/* =========================
+   LANGUAGE TOGGLE BUTTON
+========================= */
+
+.lang-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  padding: 6px 12px;
+  background: var(--bg-secondary);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 4px 4px rgba(0,0,0,0.25);
+
+  color: var(--color-mahogany);
+  font-family: "Inter", sans-serif;
+  font-size: 15px;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+
+  transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+.lang-toggle:hover {
+  background: var(--hero-dark);
+  color: var(--bg-secondary);
+}
+
+.lang-toggle:focus-visible {
+  outline: 2px solid var(--bg-secondary);
+  outline-offset: 3px;
+}
+
+.lang-toggle .flag-fr,
+.lang-toggle .flag-en {
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+/* flag-en hidden by default (shown via JS when in FR mode) */
+.flag-en {
+  display: none;
+}
+
+/* Mobile lang toggle — looks like the other mobile menu items */
+.lang-toggle-mobile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 38px;
+  padding: 6px 14px;
+  border-radius: 4px;
+  border: none;
+  background: var(--bg-secondary);
+  color: var(--color-mahogany);
+  box-shadow: 0 4px 4px rgba(0,0,0,0.25);
+  font-family: "Inter", sans-serif;
+  font-size: 15px;
+  font-weight: 300;
+  cursor: pointer;
+}
+
+/* =========================
+   CANVA EMBED
+========================= */
+
+.project-canva-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 */
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.project-canva-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+
+/* Prevent elastic overscroll from showing blank space below footer */
+html {
+  overscroll-behavior-y: none;
+}
+
+/* =========================
+   PAGE-LOAD ANIMATIONS
+========================= */
+
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hero elements animate on load */
+.hero-textcard {
+  animation: fadeSlideUp 0.65s ease forwards;
+}
+
+.hero-card {
+  opacity: 0;
+  animation: fadeSlideUp 0.75s ease 0.12s forwards;
+}
+
+/* =========================
+   SCROLL ANIMATIONS
+========================= */
+
+/* Elements are always visible by default.
+   The animation only runs when .is-visible is added by IntersectionObserver.
+   animation-fill-mode: both means it starts at the 'from' state (opacity:0)
+   the instant the class is added, then fades in — one clean reveal. */
+.anim-fade-up.is-visible {
+  animation: fadeSlideUp 0.6s ease both;
+}

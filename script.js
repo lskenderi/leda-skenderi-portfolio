@@ -168,6 +168,42 @@ document.addEventListener("DOMContentLoaded", () => {
   activateNav();
 });
 
+// -------------------------
+// Active nav link on scroll — project pages
+// Targets .nav-back links and div/section anchors
+// -------------------------
+document.addEventListener("DOMContentLoaded", () => {
+  const navBackLinks = document.querySelectorAll(".project-nav-right .nav-back");
+  if (!navBackLinks.length) return;
+
+  const anchors = Array.from(navBackLinks)
+    .map(link => {
+      const href = link.getAttribute("href");
+      if (!href || !href.startsWith("#")) return null;
+      return document.getElementById(href.slice(1));
+    })
+    .filter(Boolean);
+
+  function activateProjectNav() {
+    let current = "";
+    anchors.forEach(el => {
+      if (window.scrollY >= el.offsetTop - 120) {
+        current = el.id;
+      }
+    });
+    navBackLinks.forEach(link => {
+      link.classList.remove("is-active");
+      const href = link.getAttribute("href");
+      if (href === `#${current}`) {
+        link.classList.add("is-active");
+      }
+    });
+  }
+
+  window.addEventListener("scroll", activateProjectNav, { passive: true });
+  activateProjectNav();
+});
+
 
 // -------------------------
 // LinkedIn carousel arrows (index page)
@@ -220,8 +256,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     link.innerHTML =
       '<div class="linkedin-post-top">' +
-        '<p class="linkedin-post-label">Post</p>' +
-        '<span class="linkedin-post-open">Open</span>' +
+        '<p class="linkedin-post-label" data-i18n="linkedin.post">' + (localStorage.getItem('lang') === 'fr' ? 'Publication' : 'Post') + '</p>' +
+        '<span class="linkedin-post-open" data-i18n="linkedin.open">' + (localStorage.getItem('lang') === 'fr' ? 'Ouvrir' : 'Open') + '</span>' +
       '</div>' +
       '<div class="linkedin-post-body">' +
         '<img class="linkedin-preview" src="' + post.image + '" alt="' + escapeAttr(post.title) + '" loading="lazy">' +
@@ -273,3 +309,246 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 }());
+
+// -------------------------
+// i18n — Language toggle
+// -------------------------
+(function () {
+  var translations = {
+    en: {
+      // Nav
+      'nav.about':   'About',
+      'nav.contact': 'Contact',
+      'nav.projects':'Projects',
+      'nav.linkedin':'LinkedIn',
+      'nav.home':    'Home',
+      // Hero
+      'hero.headline': 'FASHION PRODUCT DEVELOPMENT<br>&amp; RESPONSIBLE INNOVATION',
+      'hero.meta1': 'From materials to market, contributing to collections that align creativity, sustainability, and business strategy.',
+      'hero.meta2': 'MBA Candidate in Luxury Goods and Fashion Industries,',
+      'hero.meta3': 'MODART International.',
+      // About
+      'about.title': 'ABOUT',
+      'about.subheading': 'My expertise exists at the intersection of <strong>luxury strategy</strong>, <strong>sustainability</strong>, and <strong>cultural insight</strong>.',
+      'about.p1': 'With a background in life sciences and an MBA in luxury goods and fashion industries, I bring an <strong>analytical approach to problem solving</strong>, whether that is applied to brand or product development. My studies and professional experiences trained me in <strong>systems thinking</strong> and <strong>sustainable strategies for long-term impact</strong>. Today, I apply that mindset to the evolving challenges in the luxury sector.',
+      'about.p2': 'I am particularly interested in how consumer expectations are shifting toward transparency, material literacy, and cultural relevance. <strong>As sustainability moves from narrative to necessity, brands must rethink not only what they produce, but how they position, communicate, and operationalize responsibility.</strong>',
+      'about.p3': '<strong>I am building a career dedicated to shaping brands that are not only desirable, but responsible and structurally intelligent.</strong>',
+      // Contact
+      'contact.title':   'CONTACT',
+      'contact.lead':    'I am open to discussing <strong>luxury brand strategy</strong>, <strong>sustainability integration</strong> and <strong>product development</strong>.',
+      'contact.sub':     'For professional inquiries, collaborations, or opportunities you can reach out to me via:',
+      'contact.email':   'Email',
+      'contact.linkedin':'LinkedIn',
+      // CV
+      'cv.title':    'CURRICULUM VITAE',
+      'cv.open':     'Open PDF',
+      'cv.download': 'Download',
+      // Projects
+      'projects.title':  'PROJECTS',
+      'project1.field':  'Strategic Marketing &amp; Sustainable Development',
+      'project1.desc':   'Inspired by my LinkedIn post \u201cSustainability is like smoking,\u201d this conceptual project explores the idea that sustainability progresses through systems rather than moral messaging.',
+      'project2.field':  'Trend Forecasting',
+      'project2.desc':   'Trend analysis project exploring how digital hyperexposure transforms intimacy into cultural material.',
+      'project3.field':  'Merchandising Strategy',
+      'project3.desc':   'Strategic merchandising project focused on a Chanel capsule collection in a seasonal retail setting.',
+      'project4.field':  'Marketing Analysis',
+      'project4.desc':   'Strategic marketing project analyzing the international expansion potential of Deadwood Studios, a sustainable fashion brand specializing in upcycled leather.',
+      // LinkedIn
+      'linkedin.title': 'LINKEDIN',
+      'linkedin.post':  'Post',
+      'linkedin.open':  'Open',
+      // Project page nav
+      'nav.pitch_deck': 'Pitch Deck',
+      'nav.video':      'Video',
+      // Project Pages Generic
+      'p.pdf_title': 'Project PDF',
+      // Project 1 Detailed
+      'p1.title': 'Stella McCartney × Marlboro',
+      'p1.p1': 'This conceptual project was developed as part of the Fashion Communication course and originated from a personal LinkedIn post titled “Sustainability is like smoking.” In this reflection, I argued that awareness alone does not drive behavioral change; instead, systems, social norms, and structural constraints are what enable real transformation.',
+      'p1.p2': 'Building on this idea, I imagined a fictional collaboration between Stella McCartney and Marlboro, repurposing a historically harmful symbol into a tool for awareness and material innovation. The cigarette butt—an emblematic pollutant—is reimagined as a responsible, innovative material integrated into a fashion capsule and a broader communication strategy.',
+      'p1.p3': 'My approach combined brand DNA analysis, material innovation research, critical storytelling, and the development of products and activations designed to make sustainability more visible, desirable, and culturally embedded.',
+      // Project 2 Detailed
+      'p2.title': 'L’INTIMITÉ EST MORTE, VIVE L’INTIMITÉ',
+      'p2.p1': 'This project was developed as part of a trend analysis assignment and explores the concept of Intimacy Collapse—a cultural shift in which the boundary between private and public life erodes under the effects of hyperconnectivity, oversharing, and the attention economy.',
+      'p2.p2': 'My work focused on analyzing this societal transformation—emotional, bodily, and aesthetic—and translating it into fashion, beauty, and experiential signals. I structured the project around a central concept supported by cultural, artistic, and media references.',
+      'p2.p3': 'This project demonstrates my ability to decode complex cultural dynamics and transform them into coherent, actionable creative directions for fashion and communication.',
+      // Project 3 Detailed
+      'p3.title': 'Chanel Capsule — Courchevel',
+      'p3.p1': 'This project involved designing a complete merchandising plan for a Chanel capsule collection in a seasonal boutique in Courchevel. The objective was to translate the brand’s DNA—timeless elegance, iconic codes, and desirability—into a coherent and high-performing retail experience.',
+      'p3.p2': 'I worked across the entire project scope: analysis of Chanel’s brand DNA, concept development (Celestial Bodies), customer storytelling, visual merchandising, customer journey design, and KPI monitoring including revenue estimation.',
+      'p3.p3': 'This work demonstrates my ability to align creative vision, luxury standards, and business logic within a premium retail environment.',
+      // Project 4 Detailed
+      'p4.title': 'Deadwood PROJECT',
+      'p4.p1': 'This project focused on the strategic analysis of Deadwood Studios, a fashion brand specializing in upcycled leather, as part of the Marketing Strategy course at MODART International.',
+      'p4.p2': 'I contributed to the overall brand assessment through market analysis, competitive benchmarking, and strategic reflection on positioning and the marketing mix, grounded in the study of sustainable fashion trends.',
+      'p4.p3': 'The project culminated in a strategic recommendation for international expansion, demonstrating my ability to connect sustainability, branding, and business performance.',
+      // Footer
+      'footer.text':   'Property of Leda Skenderi',
+      'footer.credit': 'Creative Copyright A.Slimani \u00a9 2026',
+    },
+    fr: {
+      // Nav
+      'nav.about':   'À propos',
+      'nav.contact': 'Contact',
+      'nav.projects':'Projets',
+      'nav.linkedin':'LinkedIn',
+      'nav.home':    'Accueil',
+      // Hero
+      'hero.headline': 'DÉVELOPPEMENT PRODUIT MODE<br>&amp; INNOVATION RESPONSABLE',
+      'hero.meta1': 'Des matières au marché, je contribue à des collections alliant créativité, durabilité et stratégie commerciale.',
+      'hero.meta2': 'Candidate au MBA Luxury Goods and Fashion Industries,',
+      'hero.meta3': 'MODART International.',
+      // About
+      'about.title': 'À PROPOS',
+      'about.subheading': 'Mon expertise se situe à l’intersection de la <strong>stratégie luxe</strong>, de la <strong>durabilité</strong> et de l’<strong>analyse culturelle</strong>.',
+      'about.p1': 'Forte d’un parcours en sciences de la vie et d’un MBA en management du luxe, j’adopte une <strong>rigueur analytique</strong> appliquée au développement de marque et de produit. Ma formation m’a familiarisée avec l’<strong>approche systémique</strong> et le pilotage de <strong>stratégies durables à impact pérenne</strong>. Aujourd’hui, je mets cet état d’esprit au service des nouveaux paradigmes du secteur du luxe.',
+      'about.p2': 'Je porte une attention particulière à l’évolution des attentes clients vers la transparence, la culture matière et la résonance culturelle. <strong>Alors que la durabilité devient un impératif structurel, les marques doivent repenser leurs modes de production, leur positionnement et l’opérationnalisation de leur responsabilité.</strong>',
+      'about.p3': '<strong>Je forge un parcours professionnel dédié à l’accompagnement de marques non seulement désirables, mais responsables et structurellement intelligentes.</strong>',
+      // Contact
+      'contact.title':   'CONTACT',
+      'contact.lead':    'Je suis ouverte à tout échange sur la <strong>stratégie de marque luxe</strong>, l’<strong>intégration RSE</strong> et le <strong>développement produit</strong>.',
+      'contact.sub':     'Pour toute demande professionnelle, collaboration ou opportunité, vous pouvez me joindre via :',
+      'contact.email':   'Email',
+      'contact.linkedin':'LinkedIn',
+      // CV
+      'cv.title':    'CURRICULUM VITAE',
+      'cv.open':     'Ouvrir PDF',
+      'cv.download': 'Télécharger',
+      // Projects
+      'projects.title':  'PROJETS',
+      'project1.field':  'Marketing Stratégique &amp; Développement Durable',
+      'project1.desc':   'Inspiré par mon post LinkedIn « La durabilité est comme le tabagisme », ce projet prospectif explore l’idée que la durabilité progresse par les systèmes plutôt que par la morale.',
+      'project2.field':  'Prospective des Tendances',
+      'project2.desc':   'Analyse prospective explorant comment l’hyperexposition numérique transforme l’intimité en matériau culturel.',
+      'project3.field':  'Stratégie Merchandising',
+      'project3.desc':   'Plan de merchandising stratégique pour une collection capsule Chanel dans un environnement retail saisonnier.',
+      'project4.field':  'Analyse Marketing',
+      'project4.desc':   'Analyse marketing évaluant le potentiel d’expansion internationale de Deadwood Studios, marque spécialisée dans le cuir upcyclé.',
+      // LinkedIn
+      'linkedin.title': 'LINKEDIN',
+      'linkedin.post':  'Publication',
+      'linkedin.open':  'Ouvrir',
+      // Project page nav
+      'nav.pitch_deck': 'Présentation',
+      'nav.video':      'Vidéo',
+      // Project Pages Generic
+      'p.pdf_title': 'PDF du Projet',
+      // Project 1 Detailed
+      'p1.title': 'Stella McCartney × Marlboro',
+      'p1.p1': 'Ce projet prospectif, développé dans le cadre du cours Fashion Communication, tire son origine d’une réflexion publiée sur LinkedIn intitulée « La durabilité est comme le tabagisme ». J’y soutenais que la sensibilisation seule ne suffit pas au changement ; ce sont les systèmes et les normes sociales qui permettent une transformation réelle.',
+      'p1.p2': 'En m’appuyant sur ce concept, j’ai imaginé une collaboration entre Stella McCartney et Marlboro, détournant un symbole historiquement nocif en un vecteur d’innovation matière. Le mégot de cigarette est réinventé comme un matériau innovant intégré à une collection capsule et une stratégie de communication globale.',
+      'p1.p3': 'Ma démarche a combiné analyse de l’ADN de marque, recherche en innovation textile et storytelling critique pour rendre la durabilité plus visible, désirable et culturellement ancrée.',
+      // Project 2 Detailed
+      'p2.title': 'L’INTIMITÉ EST MORTE, VIVE L’INTIMITÉ',
+      'p2.p1': 'Ce projet de prospective explore le concept d’Intimacy Collapse — un basculement culturel où la frontière entre sphères privée et publique s’efface sous l’effet de l’hyperconnexion et de l’économie de l’attention.',
+      'p2.p2': 'Mon travail a porté sur l’analyse de cette mutation sociétale (émotionnelle, corporelle, esthétique) pour la traduire en signaux mode, beauté et expérientiels, structurés autour de moodboards exprimant la vulnérabilité comme langage social.',
+      'p2.p3': 'Ce projet démontre ma capacité à décoder des dynamiques culturelles complexes pour les transformer en directions créatives actionnables.',
+      // Project 3 Detailed
+      'p3.title': 'Chanel Capsule — Courchevel',
+      'p3.p1': 'Conception d’un plan de merchandising complet pour une collection capsule Chanel au sein d’une boutique saisonnière à Courchevel. L’objectif était de traduire l’ADN de la Maison en une expérience retail cohérente et performante.',
+      'p3.p2': 'J’ai piloté l’ensemble du périmètre : analyse des codes de marque, développement du concept (Celestial Bodies), storytelling client, identité visuelle, parcours client et suivi des KPIs incluant l’estimation du chiffre d’affaires.',
+      'p3.p3': 'Ce travail illustre mon aptitude à aligner vision créative, standards du luxe et logique business dans un environnement retail premium.',
+      // Project 4 Detailed
+      'p4.title': 'PROJET DEADWOOD',
+      'p4.p1': 'Analyse stratégique de Deadwood Studios, marque de mode spécialisée dans le cuir upcyclé, réalisée dans le cadre du cours Marketing Strategy à MODART International.',
+      'p4.p2': 'J’ai contribué à l’évaluation globale de la marque via une analyse de marché, un benchmark concurrentiel et une réflexion stratégique sur le positionnement et le mix marketing, ancrée dans l’étude des tendances de mode durable.',
+      'p4.p3': 'Le projet a abouti à une recommandation stratégique d’expansion internationale (flagship à Copenhague), connectant durabilité, branding et performance commerciale.',
+      // Footer
+      'footer.text':   'Propriété de Leda Skenderi',
+      'footer.credit': 'Droits créatifs A.Slimani © 2026',
+    }
+  };
+
+  var currentLang = localStorage.getItem('lang') || 'en';
+
+  function applyLanguage(lang) {
+    var t = translations[lang];
+    if (!t) return;
+
+    // Update all [data-i18n] elements
+    document.querySelectorAll('[data-i18n]').forEach(function (el) {
+      var key = el.getAttribute('data-i18n');
+      if (t[key] !== undefined) {
+        el.innerHTML = t[key];
+      }
+    });
+
+    // Update lang-toggle button label(s) — show the OTHER language
+    document.querySelectorAll('.lang-label').forEach(function (el) {
+      el.textContent = lang === 'en' ? 'FR' : 'EN';
+    });
+
+    // Show correct flag: French flag in EN mode, UK flag in FR mode
+    document.querySelectorAll('.flag-fr').forEach(function (svg) {
+      svg.style.display = lang === 'en' ? '' : 'none';
+    });
+    document.querySelectorAll('.flag-en').forEach(function (svg) {
+      svg.style.display = lang === 'fr' ? 'inline-block' : 'none';
+    });
+
+    document.documentElement.lang = lang;
+    currentLang = lang;
+    localStorage.setItem('lang', lang);
+  }
+
+  function initLangToggle() {
+    applyLanguage(currentLang);
+
+    document.querySelectorAll('.lang-toggle').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        applyLanguage(currentLang === 'en' ? 'fr' : 'en');
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLangToggle);
+  } else {
+    initLangToggle();
+  }
+}());
+
+
+// -------------------------
+// Scroll animations (IntersectionObserver)
+// -------------------------
+document.addEventListener('DOMContentLoaded', function () {
+  // Add anim-fade-up to section cards
+  var animTargets = [
+    '.about-card',
+    '.contact-card',
+    '.cv-card',
+    '.projects-card',
+    '.linkedin-card',
+    '.project-page-card',
+    '.project-pdf-card',
+  ];
+
+  animTargets.forEach(function (selector) {
+    document.querySelectorAll(selector).forEach(function (el) {
+      el.classList.add('anim-fade-up');
+    });
+  });
+
+
+  if (!('IntersectionObserver' in window)) {
+    // Fallback: just show everything
+    document.querySelectorAll('.anim-fade-up').forEach(function (el) {
+      el.classList.add('is-visible');
+    });
+    return;
+  }
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.anim-fade-up').forEach(function (el) {
+    observer.observe(el);
+  });
+});
